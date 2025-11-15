@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="api-base-url" content="http://localhost:7006" />
+  <title>Hồ sơ — IntraQ&A</title>
+
+  <!-- CSS (đúng cấu trúc & relative path từ /page/user/) -->
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/utilities.css">
+  <link rel="stylesheet" href="../../assets/css/pages/user.css">
+</head>
+<body class="p-user">
+
+  <header class="q-nav-wrap">
+    <div class="nav">
+      <div class="nav__left">
+        <a class="nav__brand" href="../question/questions.html">IntraQ&A</a>
+      </div>
+      <div class="nav__right">
+        <a class="c-btn" href="../question/questions.html">Câu hỏi</a>
+        <a class="c-btn c-btn--primary" href="../question/post-create.html">Hỏi mới</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="prof-wrap">
+    <section class="prof-card">
+  <h2 class="prof-sec-title">Chỉnh sửa hồ sơ</h2>
+  <form class="l-form" id="profileForm">
+    <div class="l-form__row">
+      <label class="c-label">Tên hiển thị</label>
+      <input class="c-input" name="displayName" placeholder="Tên của bạn">
+    </div>
+    <div class="l-form__row">
+      <label class="c-label">Giới thiệu</label>
+      <textarea class="c-input" name="bio" rows="4" placeholder="Vài dòng mô tả..."></textarea>
+    </div>
+    <div class="c-alert u-mt-8" data-role="alert"></div>
+    <button class="c-btn c-btn--primary u-mt-10" data-role="save">Lưu</button>
+  </form>
+</section>
+
+<section class="prof-card">
+  <h2 class="prof-sec-title">Ảnh đại diện</h2>
+  <input type="file" accept="image/*" id="avatarFile" class="u-mt-8"/>
+  <button class="c-btn u-mt-8" id="btnUploadAvatar">Tải lên</button>
+  <div class="c-alert u-mt-8" id="avatarMsg"></div>
+</section>
+
+<section class="prof-card">
+  <h2 class="prof-sec-title">Hoạt động gần đây</h2>
+  <div id="activities">Đang tải…</div>
+</section>
+
+    <section class="prof-card">
+      <div data-mount="profile-header"></div>
+    </section>
+
+    <section class="prof-card">
+      <h2 class="prof-sec-title">Số liệu của tôi</h2>
+      <div data-mount="profile-stats"></div>
+    </section>
+
+    <section class="prof-card">
+      <h2 class="prof-sec-title">Tác vụ</h2>
+      <div data-mount="profile-actions"></div>
+    </section>
+  </main>
+
+  <script type="module" src="../../assets/js/entry/profile.entry.js"></script>
+</body>
+</html>

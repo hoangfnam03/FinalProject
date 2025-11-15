@@ -1,0 +1,8 @@
+/* Ẩn/hiện tiện dụng nếu cần dùng thêm */
+.u-hidden { display: none !important; }
+.u-block  { display: block !important; }
+
+/* Khoảng cách nhỏ nhanh */
+.u-mt-8  { margin-top: var(--sp-8); }
+.u-mt-10 { margin-top: var(--sp-10); }
+.u-mt-18 { margin-top: var(--sp-18); }

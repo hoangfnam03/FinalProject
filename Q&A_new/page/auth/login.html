@@ -1,0 +1,54 @@
+<!-- page/auth/login.html -->
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="api-base-url" content="http://localhost:7006" />
+  <title>IntraQ&A — Đăng nhập</title>
+
+  <!-- CHỈNH LẠI ĐƯỜNG DẪN: từ trang /page/auth/ đi ra ../../ -->
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/utilities.css">
+  <link rel="stylesheet" href="../../assets/css/pages/auth.css">
+</head>
+<body class="p-auth">
+
+  <div class="l-center-screen l-bg-auth">
+    <div class="l-card">
+      <div class="l-card__head">
+        <div class="l-logo"></div>
+        <div class="l-card__title">Đăng nhập</div>
+        <div class="l-card__subtitle">Chào mừng bạn đến IntraQ&A</div>
+      </div>
+
+      <form id="loginForm" class="l-form" novalidate>
+        <div class="l-form__row">
+          <label class="c-label">Email</label>
+          <input class="c-input" name="email" type="email" placeholder="you@company.com" required>
+        </div>
+
+        <div class="l-form__row">
+          <label class="c-label">Mật khẩu</label>
+          <input class="c-input" name="password" type="password" placeholder="••••••••" required>
+        </div>
+
+        <div class="c-alert u-mt-8" data-role="alert"></div>
+
+        <button type="submit" class="c-btn c-btn--primary u-mt-10" data-role="submit">Đăng nhập</button>
+
+        <div class="c-meta u-mt-10">
+          <a href="#">Quên mật khẩu?</a>
+          <span>Chưa có tài khoản? <a href="#">Đăng ký</a></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS: cũng phải sửa relative path -->
+  <script type="module" src="../../assets/js/entry/login.entry.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "page": 1,
+  "pageSize": 10,
+  "total": 2,
+  "items": [
+    {
+      "id": 1,
+      "title": "Introduction to JavaScript",
+      "authorDisplayName": "John Doe",
+      "createdAt": "2025-11-12T10:00:00Z",
+      "score": 100,
+      "tags": ["JavaScript", "Programming", "Web"],
+      "previewBody": "Learn the basics of JavaScript in this post.",
+      "categoryId": 1,
+      "categorySlug": "programming",
+      "categoryName": "Programming"
+    },
+    {
+      "id": 2,
+      "title": "Understanding APIs",
+      "authorDisplayName": "Jane Smith",
+      "createdAt": "2025-11-11T15:30:00Z",
+      "score": 85,
+      "tags": ["API", "Backend", "Web"],
+      "previewBody": "A comprehensive guide to APIs.",
+      "categoryId": 2,
+      "categorySlug": "backend",
+      "categoryName": "Backend Development"
+    }
+  ]
+}

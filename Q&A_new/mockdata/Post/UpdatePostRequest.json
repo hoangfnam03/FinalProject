@@ -1,0 +1,8 @@
+{
+  "title": "Updated Post Title",
+  "body": "This is the updated content of the post.",
+  "tags": ["UpdatedTag1", "UpdatedTag2"],
+  "categorySlug": "updated-category",
+  "categoryId": 3,
+  "removeCategory": false
+}

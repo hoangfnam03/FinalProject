@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="api-base-url" content="http://localhost:7006" />
+  <title>Tìm kiếm — IntraQ&A</title>
+
+  <!-- CSS (relative từ /page/search/) -->
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/utilities.css">
+  <link rel="stylesheet" href="../../assets/css/pages/questions.css"><!-- tái dùng style list -->
+  <link rel="stylesheet" href="../../assets/css/pages/search.css">
+</head>
+<body class="p-search">
+
+  <!-- Navbar tái dùng phong cách Questions -->
+  <header class="q-nav-wrap">
+    <div class="nav">
+      <div class="nav__left">
+        <a class="nav__brand" href="../question/questions.html">IntraQ&A</a>
+      </div>
+      <div class="nav__right">
+        <a class="c-btn" href="../user/profile.html">Hồ sơ</a>
+        <a class="c-btn c-btn--primary" href="../question/post-create.html">Hỏi mới</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Thanh tìm kiếm -->
+  <section class="s-toolbar">
+    <input class="c-input s-search" type="search" placeholder="Tìm tiêu đề, nội dung, tags…" data-role="search">
+    <button class="c-btn c-btn--primary" data-role="go">Tìm</button>
+  </section>
+
+  <!-- Kết quả -->
+  <main class="q-list" data-mount="list"></main>
+
+  <!-- Phân trang -->
+  <footer class="q-pager" data-mount="pager"></footer>
+
+  <!-- JS entry -->
+  <script type="module" src="../../assets/js/entry/search.entry.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Stats\Commands\" />
+    <Folder Include="Search\Commands\" />
+    <Folder Include="Tags\Commands\" />
+    <Folder Include="Tags\Queries\" />
+    <Folder Include="Comments - Copy\Commands\" />
+    <Folder Include="Comments - Copy\DTOs\" />
+    <Folder Include="Comments - Copy\Queries\" />
+    <Folder Include="Common\Validators\" />
+    <Folder Include="Common\Behaviors\" />
+    <Folder Include="Common\Mappings\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="13.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>

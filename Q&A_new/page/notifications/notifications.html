@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="api-base-url" content="http://localhost:7006" />
+  <title>Thông báo — IntraQ&A</title>
+
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/utilities.css">
+  <link rel="stylesheet" href="../../assets/css/pages/notifications.css">
+</head>
+<body class="p-notifs">
+  <header class="q-nav-wrap">
+    <div class="nav">
+      <div class="nav__left">
+        <a class="nav__brand" href="../question/questions.html">IntraQ&A</a>
+      </div>
+      <div class="nav__right">
+        <div data-mount="notif"></div>
+        <a class="c-btn" href="../user/profile.html">Hồ sơ</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="nf-wrap">
+    <div class="nf-head">
+      <h1 class="nf-title">Thông báo</h1>
+      <button class="c-btn" data-role="mark-all">Đánh dấu tất cả đã đọc</button>
+    </div>
+
+    <section class="nf-list" data-mount="list"></section>
+    <footer class="q-pager" data-mount="pager"></footer>
+  </main>
+
+  <script type="module" src="../../assets/js/entry/notifications.entry.js"></script>
+</body>
+</html>
