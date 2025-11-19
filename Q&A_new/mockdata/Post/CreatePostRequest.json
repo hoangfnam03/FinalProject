@@ -1,7 +1,0 @@
-{
-  "title": "New Post Title",
-  "body": "This is the content of the new post.",
-  "tags": ["Tag1", "Tag2"],
-  "categorySlug": "new-category",
-  "categoryId": null
-}

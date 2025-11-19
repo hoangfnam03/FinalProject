@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sign in - Q&A</title>
+    <link rel="stylesheet" href="../../assets/css/app.css" />
+    <link rel="stylesheet" href="../../assets/css/pages/auth.css" />
+  </head>
+  <body>
+    <div data-partial="header"></div>
+
+    <main class="page page--auth">
+      <div class="container">
+        <div class="card auth-card">
+          <h1 class="auth-card__title">Sign in</h1>
+          <p class="auth-card__subtitle text-muted">
+            Đăng nhập để đặt câu hỏi và trả lời.
+          </p>
+
+          <form data-form="login">
+            <div class="form-group">
+              <label class="form-label" for="email">Email</label>
+              <input
+                class="form-input"
+                type="email"
+                id="email"
+                name="email"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="password">Password</label>
+              <input
+                class="form-input"
+                type="password"
+                id="password"
+                name="password"
+                required
+              />
+            </div>
+
+            <p class="form-error" data-role="form-error"></p>
+
+            <button type="submit" class="btn btn-primary w-full">
+              Sign in
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <div data-partial="footer"></div>
+
+    <script type="module" src="../../assets/js/entry/login.entry.js"></script>
+  </body>
+</html>

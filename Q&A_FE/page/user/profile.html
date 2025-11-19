@@ -1,0 +1,49 @@
+<!-- page/user/profile.html -->
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Profile - Q&A</title>
+    <link rel="stylesheet" href="../../assets/css/app.css" />
+    <link rel="stylesheet" href="../../assets/css/pages/profile.css" />
+  </head>
+  <body>
+    <div data-partial="header"></div>
+
+    <main class="page page--profile">
+      <div class="container profile-layout">
+        <section class="profile-main">
+          <div class="card profile-card" data-role="profile-details">
+            <!-- JS sẽ render MeDto / PublicUserDto vào đây -->
+            <h1 class="profile-card__name">Your profile</h1>
+            <p class="text-muted">
+              Trang này dùng để hiển thị thông tin và thống kê của bạn.
+            </p>
+          </div>
+
+          <!-- NEW: Card hoạt động -->
+          <div class="card profile-activity-card">
+            <h2 class="profile-activity-card__title">Hoạt động gần đây</h2>
+            <div data-role="user-activity">
+              <p class="text-muted">Đang tải hoạt động...</p>
+            </div>
+          </div>
+        </section>
+
+        <aside class="profile-sidebar">
+          <div class="card profile-stats-card">
+            <h2 class="profile-stats-card__title">Your stats</h2>
+            <div data-role="user-stats">
+              <p class="text-muted">Đang tải thống kê...</p>
+              <!-- Phần này bạn đã/đang dùng stats api, mình không động vào -->
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <div data-partial="footer"></div>
+
+    <script type="module" src="../../assets/js/entry/profile.entry.js"></script>
+  </body>
+</html>

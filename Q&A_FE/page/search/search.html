@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Search - Q&A</title>
+    <link rel="stylesheet" href="../../assets/css/app.css" />
+    <link rel="stylesheet" href="../../assets/css/pages/search.css" />
+  </head>
+  <body>
+    <div data-partial="header"></div>
+
+    <main class="page page--search">
+      <div class="container search-page">
+        <!-- Tiêu đề + ô search trên trang -->
+        <section class="search-header">
+          <h1 class="search-title">
+            Search
+            <span class="search-query-label" data-role="search-query-label">
+            </span>
+          </h1>
+
+          <form class="search-form" data-form="page-search">
+            <input
+              class="form-input search-form__input"
+              type="search"
+              name="q"
+              placeholder="Tìm câu hỏi, người dùng, tag..."
+              required
+            />
+            <button type="submit" class="btn btn-primary search-form__btn">
+              Search
+            </button>
+          </form>
+        </section>
+
+        <!-- Tabs: Posts / Users / Tags -->
+        <nav class="search-tabs" data-role="search-tabs">
+          <button
+            type="button"
+            class="search-tab"
+            data-type="posts"
+          >
+            Posts
+          </button>
+          <button
+            type="button"
+            class="search-tab"
+            data-type="users"
+          >
+            Users
+          </button>
+          <button
+            type="button"
+            class="search-tab"
+            data-type="tags"
+          >
+            Tags
+          </button>
+        </nav>
+
+        <!-- Kết quả -->
+        <section
+          class="search-results"
+          data-role="search-results"
+        ></section>
+      </div>
+    </main>
+
+    <div data-partial="footer"></div>
+
+    <script type="module" src="../../assets/js/entry/search.entry.js"></script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+/* assets/css/tokens.css */
+
+/* Theme mặc định (light) */
+
+/* Nếu sau này muốn dark theme:
+:root[data-theme="dark"] {
+  --color-bg-body: #020617;
+  --color-bg-surface: #020617;
+  ...
+}
+*/
+
+/* assets/css/tokens.css */
+
+:root {
+  /* Nền & border */
+  --color-bg-body: #f5fbff;          /* nền tổng thể, hơi xanh nhạt */
+  --color-bg-surface: #ffffff;       /* card trắng */
+  --color-border-subtle: #e5e7eb;
+  --color-border-strong: #d1d5db;
+
+  /* Text */
+  --color-text-main: #2d3436;        /* text chính xám đậm */
+  --color-text-muted: #7f8c8d;
+  --color-text-link: #0091ff;        /* giống màu tiêu đề câu hỏi */
+
+  /* Primary (tiêu đề, link, icon…) */
+  --color-primary: #0091ff;
+  --color-primary-hover: #0074cc;
+
+  /* State */
+  --color-success: #27ae60;
+  --color-danger: #e74c3c;
+  --color-warning: #f39c12;
+
+  /* Header / footer giống screenshot */
+  --color-header-bg: #00b4ff;        /* thanh trên cùng màu cyan */
+  --color-header-text: #ffffff;
+  --color-footer-bg: #00b4ff;
+  --color-footer-text: #e5f6ff;
+
+  /* Nav active (tab Questions màu hồng) */
+  --color-nav-active-bg: #ff2d7a;    /* màu hồng nổi */
+  --color-nav-active-text: #ffffff;
+
+  /* Shadow & radius */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.12);
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Spacing & font size giữ nguyên cũng được */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  
+  /* Border/header/footer */
+  --color-border-header: rgba(148, 163, 184, 0.3);
+  --color-border-footer: rgba(148, 163, 184, 0.3);
+
+  /* Nav */
+  --color-nav-hover-bg: rgba(148, 163, 184, 0.15);
+  --color-nav-active-bg: #ff2d7a;          /* hoặc màu bạn muốn */
+  --color-nav-active-text: #ffffff;
+
+  /* Search trên header */
+  --color-header-search-bg: rgba(15, 23, 42, 0.8);
+
+  /* Button icon */
+  --color-btn-icon-border: rgba(148, 163, 184, 0.4);
+  --color-btn-icon-bg: transparent;
+  --color-btn-icon-hover-bg: rgba(148, 163, 184, 0.2);
+
+  /* Ghost button hover */
+  --color-btn-ghost-hover-bg: rgba(148, 163, 184, 0.15);
+
+  /* Form input */
+  --color-form-input-bg: #ffffff;
+  --color-form-input-border: var(--color-border-subtle);
+  --shadow-input-focus: 0 0 0 1px rgba(37, 99, 235, 0.3);
+
+  /* Text trên nút primary */
+  --color-btn-primary-text: #f9fafb;
+
+    /* Notifications */
+  --color-notification-unread-dot: #ff2d7a;
+  --color-notification-dropdown-bg: #ffffff;
+  --color-notification-dropdown-border: rgba(148, 163, 184, 0.4);
+}

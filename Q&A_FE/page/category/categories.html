@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Categories - Q&A</title>
+    <link rel="stylesheet" href="../../assets/css/app.css" />
+    <!-- pages/categories.css đã được import trong app.css, lát nữa thêm -->
+  </head>
+  <body>
+    <div data-partial="header"></div>
+
+    <main class="page page--categories">
+      <div class="container">
+        <div class="categories-header">
+          <div>
+            <h1>Categories</h1>
+            <p class="text-muted">
+              Chọn một chuyên mục để xem các câu hỏi liên quan.
+            </p>
+          </div>
+        </div>
+
+        <!-- LIST: JS sẽ render CategoryDto vào đây -->
+        <section class="categories-grid" data-role="category-list"></section>
+      </div>
+    </main>
+
+    <div data-partial="footer"></div>
+
+    <script type="module" src="../../assets/js/entry/categories.entry.js"></script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+/* assets/css/app.css */
+
+/* 1. Design tokens: màu, spacing, font-size,... */
+@import url('./token.css');
+
+/* 2. Base: reset & kiểu chữ */
+@import url('./base.css');
+
+/* 3. Layout chung: header, footer, main, container */
+@import url('./layout.css');
+
+/* 4. Components: button, nav, card, form,... */
+@import url('./components.css');
+
+/* 5. Utilities: flex, spacing nhỏ,... */
+@import url('./utilities.css');
+
+/* 6. Trang cụ thể */
+@import url('./pages/auth.css');
+@import url('./pages/questions.css');
+/* Sau này có thêm trang thì import thêm ở đây */
+@import url('./pages/categories.css');
+@import url('./pages/notifications.css');
+@import url('./pages/question-detail.css');
+@import url('./pages/question-form.css');
+@import url('./pages/profile.css');
+@import url('./pages/search.css');

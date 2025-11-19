@@ -1,0 +1,59 @@
+<!-- partials/header.html -->
+<header class="app-header">
+  <div class="container app-header__inner">
+    <div class="app-header__left">
+      <a href="/page/question/questions.html" class="logo">Q&A</a>
+
+      <nav class="main-nav">
+        <a href="/page/question/questions.html" data-nav="questions">
+          Questions
+        </a>
+        <a href="/page/category/categories.html" data-nav="categories">
+          Categories
+        </a>
+        <a href="/page/search/search.html" data-nav="search">Search</a>
+        <a href="/page/user/profile.html" data-nav="profile">Profile</a>
+      </nav>
+    </div>
+
+    <div class="app-header__right">
+      <button class="btn-icon" data-action="toggle-search" title="Search">
+        🔍
+      </button>
+
+      <form class="header-search" data-role="header-search">
+        <input name="q" type="search" placeholder="Tìm kiếm câu hỏi..." />
+      </form>
+
+      <div class="header-notification" data-role="notification">
+        <button class="btn-icon header-notification__btn" data-action="toggle-notifications" type="button"
+          title="Notifications">
+          🔔
+          <span class="badge-dot" data-role="notification-badge" aria-label="unread notifications"></span>
+        </button>
+
+        <div class="notification-dropdown" data-role="notification-dropdown">
+          <div class="notification-dropdown__header">
+            <span>Notifications</span>
+            <button type="button" class="link-button" data-action="view-all-notifications">
+              View all
+            </button>
+          </div>
+          <div class="notification-dropdown__body" data-role="notification-items">
+            <p class="text-muted">No notifications.</p>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" data-action="ask-question" type="button">
+        Ask Question
+      </button>
+
+      <div class="user-menu" data-role="user-menu">
+        <!-- layout.js sẽ thay nội dung -->
+        <button class="btn btn-ghost" data-action="login-popup" type="button">
+          Sign in
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

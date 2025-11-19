@@ -1,0 +1,32 @@
+/* assets/css/pages/auth.css */
+
+.page--auth .container {
+  max-width: 400px;
+}
+
+/* main bây giờ đã flex:1 từ .page, chỉ cần canh giữa theo chiều dọc */
+.page--auth main {
+  display: flex;
+  align-items: center; /* canh giữa theo chiều dọc vùng giữa header & footer */
+}
+
+.auth-card {
+  width: 100%;
+}
+
+.auth-card__title {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+.auth-card__subtitle {
+  margin-bottom: var(--space-4);
+}
+
+.form-error {
+  min-height: 1em;
+  margin-bottom: var(--space-3);
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+}

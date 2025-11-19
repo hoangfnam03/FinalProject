@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ask a question - Q&A</title>
+    <link rel="stylesheet" href="../../assets/css/app.css" />
+    <link rel="stylesheet" href="../../assets/css/pages/question-form.css" />
+  </head>
+  <body>
+    <div data-partial="header"></div>
+
+    <main class="page page--question-form">
+      <div class="container">
+        <div class="card question-form">
+          <h1 class="question-form__title">Ask a public question</h1>
+
+          <form data-form="question">
+            <div class="form-group">
+              <label class="form-label" for="title">Tiêu đề</label>
+              <input
+                class="form-input"
+                type="text"
+                id="title"
+                name="title"
+                required
+              />
+              <p class="text-muted">
+                Hãy đặt tiêu đề ngắn gọn, rõ ràng.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="body">Nội dung</label>
+              <textarea
+                class="form-input question-form__textarea"
+                id="body"
+                name="body"
+                rows="6"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="tags">Tags</label>
+              <input
+                class="form-input"
+                type="text"
+                id="tags"
+                name="tags"
+                placeholder="vd: javascript, html"
+              />
+              <p class="text-muted">
+                Cách nhau bằng dấu phẩy (,).
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="category">
+                Chuyên mục (category)
+              </label>
+              <select
+                class="form-input"
+                id="category"
+                name="categorySlug"
+              >
+                <option value="">-- Không chọn --</option>
+                <!-- JS sẽ load CategoryDto và thêm option -->
+              </select>
+            </div>
+
+            <p class="form-error" data-role="form-error"></p>
+
+            <button type="submit" class="btn btn-primary">
+              Đăng câu hỏi
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <div data-partial="footer"></div>
+
+    <script
+      type="module"
+      src="../../assets/js/entry/question-create.entry.js"
+    ></script>
+  </body>
+</html>

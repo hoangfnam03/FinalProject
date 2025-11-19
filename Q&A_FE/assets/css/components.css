@@ -1,0 +1,137 @@
+/* assets/css/components.css */
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  background-color: transparent;
+  color: inherit;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-btn-primary-text);
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: inherit;
+}
+.btn-ghost:hover {
+  background-color: var(--color-btn-ghost-hover-bg);
+}
+
+/* Icon button trong header */
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-btn-icon-border);
+  background-color: var(--color-btn-icon-bg);
+  color: var(--color-header-text);
+  cursor: pointer;
+}
+.btn-icon:hover {
+  background-color: var(--color-btn-icon-hover-bg);
+}
+
+/* CARD chung (sau này bạn dùng cho câu hỏi, profile,...) */
+.card {
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4);
+}
+
+/* FORM GROUP */
+.form-group {
+  margin-bottom: var(--space-4);
+}
+.form-label {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+.form-input {
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-form-input-border);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  outline: none;
+  background-color: var(--color-form-input-bg);
+}
+.form-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-input-focus);
+}
+
+/* TEXT HELP */
+.text-muted {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Badge dot dùng cho notifications */
+.badge-dot {
+  display: none;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background-color: var(--color-notification-unread-dot);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-dot.is-visible {
+  display: inline-flex;
+}
+
+/* Nút dạng link */
+.link-button {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-link);
+  cursor: pointer;
+}
+.link-button:hover {
+  text-decoration: underline;
+}
+
+.btn-sm {
+  padding: 2px 8px;
+  font-size: var(--text-xs);
+}

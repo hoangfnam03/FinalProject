@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Questions - Q&A</title>
+    <link rel="stylesheet" href="../../assets/css/app.css" />
+    <link rel="stylesheet" href="../../assets/css/pages/questions.css" />
+  </head>
+  <body>
+    <div data-partial="header"></div>
+
+    <main class="page page--questions">
+      <div class="container">
+        <header class="questions-page-header">
+          <div>
+            <h1 data-role="questions-heading">Questions</h1>
+            <p class="text-muted" data-role="filter-info"></p>
+          </div>
+
+          <div class="questions-filters">
+            <button class="btn btn-ghost btn-filter is-active">Newest</button>
+            <button class="btn btn-ghost btn-filter">Votes</button>
+            <button class="btn btn-ghost btn-filter">Updated</button>
+            <button class="btn btn-ghost btn-filter">Unanswered</button>
+          </div>
+        </header>
+
+        <section class="overview-stats-card card" data-role="overview-stats">
+          <!-- JS render OverviewStatsDto ở đây -->
+          <p class="text-muted">Đang tải thống kê...</p>
+        </section>
+
+        <section class="questions-list"></section>
+      </div>
+    </main>
+
+    <div data-partial="footer"></div>
+
+    <script type="module" src="../../assets/js/entry/questions.entry.js"></script>
+  </body>
+</html>

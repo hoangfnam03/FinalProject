@@ -1,0 +1,198 @@
+/* assets/css/layout.css */
+
+/* Container chung để căn giữa nội dung */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+/* HEADER */
+.app-header {
+  background-color: var(--color-header-bg);
+  color: var(--color-header-text);
+  border-bottom: 1px solid var(--color-border-header);
+}
+
+.app-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) 0;
+}
+
+.app-header__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.logo {
+  font-weight: 700;
+  font-size: var(--text-lg);
+  color: var(--color-header-text);
+}
+
+.main-nav {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.main-nav a {
+  font-size: var(--text-sm);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--color-header-text);
+  opacity: 0.8;
+}
+.main-nav a:hover {
+  background-color: var(--color-nav-hover-bg);
+  text-decoration: none;
+  opacity: 1;
+}
+.main-nav a.active {
+  background-color: var(--color-nav-active-bg);
+  color: var(--color-nav-active-text);
+}
+
+/* Right side header */
+.app-header__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Header search */
+.header-search {
+  display: none; /* ẩn mặc định, chỉ hiện khi toggle */
+  align-items: center;
+  background-color: var(--color-header-search-bg);
+  border-radius: 999px;
+  padding: 0 var(--space-3);
+}
+
+.header-search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-header-text);
+  padding: var(--space-1) 0;
+  width: 200px;
+  font-size: var(--text-sm);
+}
+
+.header-search.is-open {
+  display: flex;
+}
+
+/* User menu */
+.user-menu__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.user-menu__name {
+  font-size: var(--text-sm);
+  color: var(--color-header-text);
+  opacity: 0.85;
+}
+
+/* FOOTER */
+.app-footer {
+  background-color: var(--color-footer-bg);
+  color: var(--color-footer-text);
+  border-top: 1px solid var(--color-border-footer);
+}
+
+.app-footer__inner {
+  padding: var(--space-3) 0;
+  text-align: center;
+  font-size: var(--text-sm);
+}
+
+/* MAIN PAGE LAYOUT – ví dụ chung cho phần nội dung */
+.page--questions .container,
+.page--search .container,
+.page--auth .container,
+.page--profile .container {
+  display: block;
+}
+
+/* Bạn có thể custom layout riêng ở pages/*.css nếu cần grid */
+
+/* Notifications in header */
+.header-notification {
+  position: relative;
+}
+
+.header-notification__btn {
+  position: relative;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  width: 320px;
+  background-color: var(--color-notification-dropdown-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  display: none;
+  z-index: 20;
+}
+
+.notification-dropdown.is-open {
+  display: block;
+}
+
+.notification-dropdown__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px var(--space-1) var(--space-2);
+  border-bottom: 1px solid var(--color-border-subtle);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  background-color: var(--color-header-bg);
+}
+
+.notification-dropdown__body {
+  max-height: 320px;
+  overflow-y: auto;
+  padding-top: var(--space-2) var(--space-2);
+}
+
+/* Item trong dropdown */
+.notification-item {
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.notification-item:hover {
+  background-color: #f1f5f9;
+}
+
+.notification-item--unread {
+  background-color: #e0f2fe;
+}
+
+.notification-item__title {
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.notification-item__excerpt {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.notification-item__time {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}

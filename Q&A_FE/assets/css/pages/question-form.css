@@ -1,0 +1,20 @@
+/* assets/css/pages/question-form.css */
+
+.page--question-form main {
+  min-height: calc(100vh - 140px);
+}
+
+.question-form {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.question-form__title {
+  margin-bottom: var(--space-4);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.question-form__textarea {
+  min-height: 200px;
+}

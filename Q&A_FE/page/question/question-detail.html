@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Question detail - Q&A</title>
+    <link rel="stylesheet" href="../../assets/css/app.css" />
+    <link rel="stylesheet" href="../../assets/css/pages/question-detail.css" />
+  </head>
+  <body>
+    <div data-partial="header"></div>
+
+    <main class="page page--question-detail">
+      <div class="container">
+        <!-- CÂU HỎI -->
+        <article class="question-detail card" data-role="question-detail">
+          <p>Đang tải câu hỏi...</p>
+        </article>
+
+        <section class="question-history card">
+          <div class="question-history__header">
+            <div>
+              <h2 class="question-history__title" data-role="history-title">
+                Lịch sử câu hỏi
+              </h2>
+              <p
+                class="question-history__subtitle text-muted"
+                data-role="history-subtitle"
+              >
+                Các lần chỉnh sửa nội dung câu hỏi.
+              </p>
+            </div>
+            <button
+              class="link-button"
+              type="button"
+              data-action="history-back-to-question"
+              hidden
+            >
+              Quay lại lịch sử câu hỏi
+            </button>
+          </div>
+
+          <div class="question-history__layout">
+            <div class="question-history__list" data-role="history-list">
+              <!-- JS render RevisionDto / CommentRevisionDto -->
+            </div>
+            <div class="question-history__detail" data-role="history-detail">
+              <!-- JS render RevisionDetailDto / CommentRevisionDetailDto -->
+            </div>
+          </div>
+        </section>
+
+        <!-- DANH SÁCH COMMENT -->
+        <section class="question-comments">
+          <h2 class="question-comments__title">Comments</h2>
+          <div class="question-comments__list" data-role="comment-list">
+            <!-- JS render CommentDto -->
+          </div>
+
+          <!-- FORM THÊM COMMENT -->
+          <div class="question-comments__form card">
+            <h3 class="question-comments__form-title">
+              Thêm bình luận
+            </h3>
+            <form data-form="add-comment">
+              <div class="form-group">
+                <label class="form-label" for="comment-body">
+                  Nội dung
+                </label>
+                <textarea
+                  id="comment-body"
+                  name="body"
+                  class="form-input question-comments__textarea"
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+              <p class="form-error" data-role="comment-error"></p>
+              <button class="btn btn-primary" type="submit">
+                Đăng bình luận
+              </button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div data-partial="footer"></div>
+
+    <script
+      type="module"
+      src="../../assets/js/entry/question-detail.entry.js"
+    ></script>
+  </body>
+</html>
