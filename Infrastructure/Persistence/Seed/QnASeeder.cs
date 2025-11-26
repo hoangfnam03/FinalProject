@@ -21,6 +21,9 @@ namespace Infrastructure.Persistence.Seed
             ApplicationDbContext ctx,
             UserManager<ApplicationUser> userManager)
         {
+            // B0: đảm bảo bảng TrustLevels có dữ liệu gốc
+            await EnsureTrustLevelsAsync(ctx);
+
             // B1: đảm bảo có vài user thường + Member tương ứng
             await EnsureDemoMembersAsync(ctx, userManager);
 
@@ -35,12 +38,17 @@ namespace Infrastructure.Persistence.Seed
         /// Nếu bảng Members đang rỗng thì tạo 5 user thường + 5 member tương ứng
         /// </summary>
         private static async Task EnsureDemoMembersAsync(
-    ApplicationDbContext ctx,
-    UserManager<ApplicationUser> userManager)
+            ApplicationDbContext ctx,
+            UserManager<ApplicationUser> userManager)
         {
             // Nếu đã có Member thì thôi, không tạo nữa
             if (await ctx.Members.AnyAsync())
                 return;
+
+            var defaultTrustLevelId = await ctx.TrustLevels
+                .OrderBy(t => t.Id)
+                .Select(t => t.Id)
+                .FirstAsync();
 
             // ✔ Thêm 1 admin + vài user thường
             var demoUsers = new[]
@@ -90,7 +98,7 @@ namespace Infrastructure.Persistence.Seed
                                             : "Tài khoản user demo để test Q&A.",
                         IsAdministrator = du.IsAdmin,
                         IsModerator = false,
-                        TrustLevelId = 1 // bạn chỉnh lại cho khớp dữ liệu TrustLevel
+                        TrustLevelId = defaultTrustLevelId
                     });
                 }
             }
@@ -466,6 +474,22 @@ _(Tạo bởi: {authorName})_";
                 3 => "Nhớ phân trang (paging), sort, filter cho danh sách câu hỏi để UX tốt hơn.",
                 _ => "Ý tưởng hệ thống Q&A nội bộ kết hợp AI trả lời theo tài liệu công ty là khá hay đấy."
             };
+        }
+
+        private static async Task EnsureTrustLevelsAsync(ApplicationDbContext ctx)
+        {
+            if (await ctx.TrustLevels.AnyAsync())
+                return;
+
+            var trustLevels = new[]
+            {
+                new TrustLevel { Name = "Beginner", Description = "Thành viên mới" },
+                new TrustLevel { Name = "Intermediate", Description = "Thành viên hoạt động thường xuyên" },
+                new TrustLevel { Name = "Expert", Description = "Thành viên uy tín" }
+            };
+
+            await ctx.TrustLevels.AddRangeAsync(trustLevels);
+            await ctx.SaveChangesAsync();
         }
     }
 }
