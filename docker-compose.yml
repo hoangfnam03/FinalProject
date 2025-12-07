@@ -9,41 +9,63 @@ services:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Sa123456!
     ports:
-      - "1433:1433"
+      - "1436:1433"          # ĐỔI: host 1436 -> container 1433, tránh trùng SQL máy
     volumes:
       - sql_data:/var/opt/mssql
     networks:
       - qna_network
 
-  # 2. Backend (.NET Clean Architecture)
+  # 2. Backend (.NET)
   backend:
     build:
-      context: .             # Context ở root để lấy được Domain/Infra
-      dockerfile: Dockerfile # File Dockerfile ở root
+      context: .             # build từ FinalProject
+      dockerfile: Dockerfile # Dockerfile của BE
     container_name: qna_backend
     ports:
-      - "7006:7006"          # Map cổng 7006 máy thật -> 7006 container
+      - "7006:7006"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      # Ép container lắng nghe đúng cổng 7006
       - ASPNETCORE_URLS=http://+:7006
-      # Kết nối DB dùng tên service 'db' thay vì localhost
+      # Key phải trùng ConnectionStrings:DefaultConnection trong appsettings
       - ConnectionStrings__DefaultConnection=Server=db,1433;Database=QnA;User Id=sa;Password=Sa123456!;TrustServerCertificate=True;
     depends_on:
       - db
     networks:
       - qna_network
 
-  # 3. Frontend (HTML/CSS/JS thuần)
+  # 3. Frontend (Nginx)
   frontend:
     build:
-      context: ./QnA_FE    # Context vào thư mục FE
+      context: ./QnA_FE
       dockerfile: Dockerfile
     container_name: qna_frontend
     ports:
-      - "3000:80"          # Frontend chạy ở cổng 3000 (để tránh trùng 7006 của BE)
+      - "3000:80"
     networks:
       - qna_network
+    
+  db-migrator:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    container_name: qna-db-migrator
+    volumes:
+      - .:/src
+    working_dir: /src
+    depends_on:
+      - db
+    networks:
+      - qna_network
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=QnA;User Id=sa;Password=Sa123456!;TrustServerCertificate=True;
+    command: >
+      /bin/bash -c "
+      echo '--- Đợi DB sẵn sàng ---' &&
+      sleep 20 &&
+      echo '--- Cài đặt dotnet-ef ---' &&
+      dotnet tool install --global dotnet-ef --version 8.0.10 || true &&
+      echo '--- Chạy migration ---' &&
+      /root/.dotnet/tools/dotnet-ef database update --project Infrastructure/Infrastructure.csproj --startup-project QnA_BE/QnA_BE.csproj --verbose &&
+      echo '=== MIGRATION DONE ==='
+      "
 
 volumes:
   sql_data:
