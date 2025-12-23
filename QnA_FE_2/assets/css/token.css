@@ -1,0 +1,46 @@
+/* assets/css/token.css */
+
+/* 
+  Toàn bộ màu sắc, font, radius… đặt ở đây.
+  Khi deploy cho tổ chức khác: chỉ cần override các biến này.
+*/
+
+:root {
+  /* Brand colors */
+  --brand-primary: #2563eb;
+  --brand-primary-soft: #1d4ed8;
+  --brand-primary-subtle: #1e293b;
+  --brand-accent: #22c55e;
+
+  /* Surfaces */
+  --surface-dark: #020617;
+  --surface-dark-soft: #020617;
+  --surface-light: #ffffff;
+  --surface-muted: #0b1120;
+
+  /* Text */
+  --text-main: #0f172a;
+  --text-soft: #64748b;
+  --text-on-dark: #e2e8f0;
+  --text-on-primary: #ffffff;
+
+  /* Border & shadow */
+  --border-subtle: #e2e8f0;
+  --shadow-soft: 0 22px 60px rgba(15, 23, 42, 0.45);
+
+  /* Radius */
+  --radius-lg: 32px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+
+  /* Sizes */
+  --auth-max-width: 1120px;
+
+  /* Font */
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+
+  /* Animations */
+  --transition-fast: 150ms ease-out;
+  --transition-normal: 220ms ease;
+}

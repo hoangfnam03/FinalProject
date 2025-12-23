@@ -7,16 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Stats\Commands\" />
-    <Folder Include="Search\Commands\" />
-    <Folder Include="Tags\Commands\" />
-    <Folder Include="Tags\Queries\" />
-    <Folder Include="Comments - Copy\Commands\" />
-    <Folder Include="Comments - Copy\DTOs\" />
-    <Folder Include="Comments - Copy\Queries\" />
-    <Folder Include="Common\Validators\" />
-    <Folder Include="Common\Behaviors\" />
-    <Folder Include="Common\Mappings\" />
+    <Compile Remove="Comments - Copy\**" />
+    <Compile Remove="Common\Behaviors\**" />
+    <Compile Remove="Common\Mappings\**" />
+    <Compile Remove="Common\Validators\**" />
+    <Compile Remove="Search\Commands\**" />
+    <Compile Remove="Stats\Commands\**" />
+    <Compile Remove="Tags\Commands\**" />
+    <EmbeddedResource Remove="Comments - Copy\**" />
+    <EmbeddedResource Remove="Common\Behaviors\**" />
+    <EmbeddedResource Remove="Common\Mappings\**" />
+    <EmbeddedResource Remove="Common\Validators\**" />
+    <EmbeddedResource Remove="Search\Commands\**" />
+    <EmbeddedResource Remove="Stats\Commands\**" />
+    <EmbeddedResource Remove="Tags\Commands\**" />
+    <None Remove="Comments - Copy\**" />
+    <None Remove="Common\Behaviors\**" />
+    <None Remove="Common\Mappings\**" />
+    <None Remove="Common\Validators\**" />
+    <None Remove="Search\Commands\**" />
+    <None Remove="Stats\Commands\**" />
+    <None Remove="Tags\Commands\**" />
   </ItemGroup>
 
   <ItemGroup>

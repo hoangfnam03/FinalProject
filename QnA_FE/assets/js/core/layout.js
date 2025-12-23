@@ -59,34 +59,98 @@ function initHeaderSearch() {
 });
 }
 
+function formatNumberForRep(value) {
+  const num = Number(value) || 0;
+  if (num >= 1000) {
+    return num.toLocaleString('en-US'); // 1240 -> 1,240
+  }
+  return String(num);
+}
+
 function initUserMenu() {
   const userMenu = qs('[data-role="user-menu"]');
   if (!userMenu) return;
 
   const me = auth.getCurrentUser();
 
+  // CHƯA ĐĂNG NHẬP -> nút Đăng nhập
   if (!me) {
     userMenu.innerHTML = `
-      <button class="btn btn-ghost" data-action="login-popup">
+      <button class="btn btn-ghost" data-action="login-popup" type="button">
         Đăng nhập
       </button>
     `;
-  } else {
-    userMenu.innerHTML = `
-      <div class="user-menu__inner">
-        <span class="user-menu__name">${me.displayName || me.email}</span>
-        <button class="btn btn-ghost" data-action="logout">Đăng xuất</button>
-      </div>
-    `;
 
-    userMenu
-      .querySelector('[data-action="logout"]')
-      .addEventListener('click', () => {
-        auth.clearAuth();
-        location.href = '/page/auth/login.html';
+    const loginBtn = userMenu.querySelector('[data-action="login-popup"]');
+    if (loginBtn) {
+      loginBtn.addEventListener('click', () => {
+        window.location.href = '/page/auth/login.html';
       });
+    }
+    return;
+  }
+
+  // ĐÃ ĐĂNG NHẬP -> user chip (avatar + tên + rep)
+  const name =
+    me.displayName ||
+    me.fullName ||
+    me.userName ||
+    me.email ||
+    'User';
+
+  const rep =
+    me.reputation ??
+    me.reputationScore ??
+    me.rep ??
+    0;
+
+  const avatarUrl = me.avatarUrl || me.avatar || '';
+
+  userMenu.innerHTML = `
+    <div class="user-chip" data-action="go-profile">
+      <div class="user-chip__avatar">
+        ${
+          avatarUrl
+            ? `<img src="${avatarUrl}" alt="${name}" />`
+            : `<span class="user-chip__avatar-fallback">${
+                (name[0] || 'U').toUpperCase()
+              }</span>`
+        }
+      </div>
+      <div class="user-chip__info">
+        <div class="user-chip__name">${name}</div>
+        <div class="user-chip__rep">
+          Rep: ${formatNumberForRep(rep)}
+          ·
+          <button
+            type="button"
+            class="user-chip__logout"
+            data-action="logout"
+          >
+            Đăng xuất
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const profileChip = userMenu.querySelector('[data-action="go-profile"]');
+  if (profileChip) {
+    profileChip.addEventListener('click', () => {
+      window.location.href = '/page/user/profile.html';
+    });
+  }
+
+  const logoutBtn = userMenu.querySelector('[data-action="logout"]');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // không trigger go-profile
+      auth.clearAuth();
+      location.href = '/page/auth/login.html';
+    });
   }
 }
+
 
 function initNotificationWidget() {
   const wrapper = document.querySelector('[data-role="notification"]');
@@ -105,15 +169,11 @@ function initNotificationWidget() {
   const viewAllBtn = wrapper.querySelector(
     '[data-action="view-all-notifications"]'
   );
+  const markAllBtn = wrapper.querySelector(
+    '[data-action="mark-all-read"]'
+  );
 
   if (!toggleBtn || !dropdown || !itemsContainer) return;
-
-  // Ẩn nếu chưa đăng nhập (tuỳ bạn)
-  // import { auth } ở đầu nếu muốn dùng
-  // if (!auth.isAuthenticated()) {
-  //   wrapper.style.display = 'none';
-  //   return;
-  // }
 
   toggleBtn.addEventListener('click', async (e) => {
     e.stopPropagation();
@@ -138,6 +198,13 @@ function initNotificationWidget() {
   if (viewAllBtn) {
     viewAllBtn.addEventListener('click', () => {
       window.location.href = '/page/notification/notifications.html';
+    });
+  }
+
+  if (markAllBtn) {
+    markAllBtn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      await markAllCurrentAsRead(itemsContainer, badge);
     });
   }
 
@@ -175,28 +242,40 @@ async function loadNotificationsPreview(itemsContainer, badgeEl) {
     }
 
     itemsContainer.innerHTML = items
-      .map(
-        (n) => `
-        <div class="notification-item ${
-          n.isRead ? '' : 'notification-item--unread'
-        }"
-             data-id="${n.id}"
-             data-action-url="${n.actionUrl || ''}">
-          <div class="notification-item__title">
-            ${n.postTitle || n.type || 'Notification'}
+      .map((n) => {
+        const iconType =
+          (n.type && n.type.toLowerCase().includes('accept')) ||
+          n.category === 'AnswerAccepted'
+            ? 'success'
+            : 'info';
+
+        return `
+          <div class="notification-item ${
+            n.isRead ? '' : 'notification-item--unread'
+          }"
+               data-id="${n.id}"
+               data-action-url="${n.actionUrl || ''}">
+            <div class="notification-item__icon notification-item__icon--${iconType}">
+              ${iconType === 'success' ? '✓' : '↑'}
+            </div>
+            <div class="notification-item__content">
+              <div class="notification-item__title">
+                ${n.title || n.postTitle || 'Thông báo'}
+              </div>
+              ${
+                n.excerpt
+                  ? `<div class="notification-item__excerpt">${n.excerpt}</div>`
+                  : ''
+              }
+              <span class="notification-item__time">
+                ${n.createdAt || n.createdAtLabel || ''}
+              </span>
+            </div>
           </div>
-          ${
-            n.excerpt
-              ? `<div class="notification-item__excerpt">${n.excerpt}</div>`
-              : ''
-          }
-          <span class="notification-item__time">
-            ${n.actorName ? `${n.actorName} · ` : ''}${n.createdAt || ''}
-          </span>
-        </div>
-      `
-      )
+        `;
+      })
       .join('');
+
 
     // click 1 item -> mark read + chuyển trang (nếu có actionUrl)
     itemsContainer
@@ -226,6 +305,28 @@ async function loadNotificationsPreview(itemsContainer, badgeEl) {
       '<p class="text-muted">Không tải được notifications.</p>';
   }
 }
+
+async function markAllCurrentAsRead(itemsContainer, badgeEl) {
+  if (!itemsContainer) return;
+  const ids = [];
+  itemsContainer.querySelectorAll('.notification-item').forEach((el) => {
+    const id = Number(el.dataset.id);
+    if (id) ids.push(id);
+  });
+  if (!ids.length) return;
+
+  try {
+    await notificationApi.markRead(ids);
+    // cập nhật UI
+    itemsContainer
+      .querySelectorAll('.notification-item')
+      .forEach((el) => el.classList.remove('notification-item--unread'));
+    await loadUnreadCount(badgeEl);
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 
 function initAskQuestionButton() {
   const btn = qs('[data-action="ask-question"]');

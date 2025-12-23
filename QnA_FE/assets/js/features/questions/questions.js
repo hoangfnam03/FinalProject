@@ -1,142 +1,141 @@
 // assets/js/features/questions/questions.js
 import { questionApi } from '../../api/question.api.js';
-import { categoryApi } from '../../api/category.api.js';
 
-export async function initQuestionsPage() {
-  const listEl = document.querySelector('.questions-list');
-  const headingEl = document.querySelector('[data-role="questions-heading"]');
-  const filterInfoEl = document.querySelector('[data-role="filter-info"]');
+let state = {
+  page: 1,
+  pageSize: 10,
+  sort: 'newest',
+};
+
+export function initQuestionsPage() {
+  const sortContainer = document.querySelector('[data-role="question-sort"]');
+
+  if (sortContainer) {
+    sortContainer.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-sort]');
+      if (!btn) return;
+
+      const sort = btn.dataset.sort;
+      if (!sort || sort === state.sort) return;
+
+      state.sort = sort;
+      state.page = 1;
+
+      // toggle active
+      sortContainer
+        .querySelectorAll('.btn-tab')
+        .forEach((b) => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+
+      loadQuestions();
+    });
+  }
+
+  loadQuestions();
+}
+
+async function loadQuestions() {
+  const listEl = document.querySelector('[data-role="question-list"]');
+  const paginationEl = document.querySelector('[data-role="pagination"]');
 
   if (!listEl) return;
 
-  const url = new URL(window.location.href);
-  const page = Number(url.searchParams.get('page') || 1);
-  const pageSize = Number(url.searchParams.get('pageSize') || 10);
-  const categorySlug = url.searchParams.get('category');
-  const tag = url.searchParams.get('tag');
-
-  listEl.innerHTML = '<p>Đang tải danh sách câu hỏi...</p>';
-  if (filterInfoEl) filterInfoEl.textContent = '';
+  listEl.innerHTML = '<p class="text-muted">Đang tải câu hỏi...</p>';
+  if (paginationEl) paginationEl.innerHTML = '';
 
   try {
-    let paged;
-    let filterLabel = '';
+    const paged = await questionApi.getList({
+      page: state.page,
+      pageSize: state.pageSize,
+      sort: state.sort,
+    });
 
-    if (categorySlug) {
-      paged = await categoryApi.getPostsBySlug(categorySlug, {
-        page,
-        pageSize,
+    const items = paged.items || paged.data || [];
+    listEl.innerHTML = items.length
+      ? items.map(renderQuestionCard).join('')
+      : '<p class="text-muted">Chưa có câu hỏi nào.</p>';
+
+    if (paginationEl) {
+      renderPagination(paginationEl, {
+        page: paged.page || state.page,
+        pageSize: paged.pageSize || state.pageSize,
+        totalItems: paged.totalItems ?? paged.total ?? 0,
+        totalPages: paged.totalPages ?? Math.ceil((paged.totalItems ?? 0) / state.pageSize),
       });
-      filterLabel = `Category: ${categorySlug}`;
-    } else if (tag) {
-      paged = await questionApi.getByTag(tag, { page, pageSize });
-      filterLabel = `Tag: ${tag}`;
-    } else {
-      paged = await questionApi.getAll({ page, pageSize });
     }
-
-    const items = paged.items || [];
-    if (items.length === 0) {
-      listEl.innerHTML = '<p>Không có câu hỏi nào.</p>';
-    } else {
-      listEl.innerHTML = items.map(renderQuestionCard).join('');
-    }
-
-    if (headingEl) {
-      headingEl.textContent = `Questions ${paged.total ?? ''}`;
-    }
-    if (filterInfoEl && filterLabel) {
-      filterInfoEl.textContent = filterLabel;
-    }
-  } catch (error) {
-    console.error(error);
-    listEl.innerHTML = '<p>Không tải được danh sách câu hỏi.</p>';
+  } catch (err) {
+    console.error(err);
+    listEl.innerHTML =
+      '<p class="text-muted">Không tải được danh sách câu hỏi.</p>';
   }
 }
 
 function renderQuestionCard(q) {
-  const {
-    id,
-    title,
-    authorDisplayName,
-    createdAt,
-    score,
-    tags,
-    previewBody,
-    categoryName,
-    categorySlug,
-    categoryId,
-  } = q;
+  const url = `/page/question/question-detail.html?id=${encodeURIComponent(
+    q.id
+  )}`;
 
-  const created = formatDate(createdAt);
-  const tagList = tags || [];
+  const tags = (q.tags || q.tagNames || []).map(
+    (t) => `<span class="tag-pill">${escapeHtml(t)}</span>`
+  );
 
-  const detailLink = `/page/question/question-detail.html?id=${id}`;
+  const votes = q.votes ?? q.voteCount ?? 0;
+  const ageLabel = q.ageLabel || q.createdAgo || '';
 
-  const categoryLabel =
-    categoryName ||
-    (categorySlug && `Category: ${categorySlug}`) ||
-    (categoryId && `Category #${categoryId}`) ||
-    '';
+  const authorName = q.authorName || q.author?.displayName || 'Ẩn danh';
+  const authorAvatar = q.authorAvatarUrl || q.author?.avatarUrl || '';
+
+  const createdAtLabel = q.createdAtLabel || q.createdAgo || '';
 
   return `
-    <article class="question-card card">
+    <article class="question-card">
       <div class="question-card__stats">
-        <div class="question-stat">
-          <span class="question-stat__value">${score ?? 0}</span>
-          <span class="question-stat__label">Votes</span>
-        </div>
-        <div class="question-stat">
-          <span class="question-stat__value">0</span>
-          <span class="question-stat__label">Answers</span>
-        </div>
-        <div class="question-stat">
-          <span class="question-stat__value">0</span>
-          <span class="question-stat__label">Views</span>
-        </div>
+        <div class="question-card__stats-label">Votes</div>
+        <div class="question-card__stats-value">${votes}</div>
+        ${
+          ageLabel
+            ? `<div class="question-card__age">${escapeHtml(ageLabel)}</div>`
+            : ''
+        }
       </div>
 
-      <div class="question-card__main">
-        <a href="${detailLink}" class="question-card__title">
-          ${escapeHtml(title)}
-        </a>
+      <div class="question-card__content">
+        <h2 class="question-card__title">
+          <a href="${url}">${escapeHtml(q.title || '')}</a>
+        </h2>
 
-        <p class="question-card__excerpt">
-          ${escapeHtml(previewBody || '')}
-        </p>
+        ${
+          q.excerpt || q.summary
+            ? `<p class="question-card__excerpt">${escapeHtml(
+                q.excerpt || q.summary
+              )}</p>`
+            : ''
+        }
 
-        <div class="question-card__meta">
-          <div class="question-card__tags">
-            ${
-              categoryLabel
-                ? `<span class="tag-pill tag-pill--category">${escapeHtml(
-                    categoryLabel
-                  )}</span>`
-                : ''
-            }
-            ${tagList
-              .map(
-                (t) => `
-              <a class="tag-pill" href="/page/question/questions.html?tag=${encodeURIComponent(
-                t
-              )}">
-                ${escapeHtml(t)}
-              </a>`
-              )
-              .join('')}
-          </div>
+        ${
+          tags.length
+            ? `<div class="question-card__tags">${tags.join('')}</div>`
+            : ''
+        }
 
+        <div class="question-card__footer">
           <div class="question-card__author">
-            <div class="avatar-small">
-              ${escapeHtml((authorDisplayName || 'U')[0].toUpperCase())}
+            <div class="question-card__author-avatar">
+              ${
+                authorAvatar
+                  ? `<img src="${authorAvatar}" alt="${escapeHtml(
+                      authorName
+                    )}" />`
+                  : ''
+              }
             </div>
-            <div class="question-card__author-info">
-              <span class="question-card__author-name">
-                ${escapeHtml(authorDisplayName || 'Unknown')}
-              </span>
-              <span class="question-card__time">
-                ${created ? created : ''}
-              </span>
+            <div>
+              <div class="question-card__author-name">${escapeHtml(
+                authorName
+              )}</div>
+              <div class="question-card__meta">
+                ${createdAtLabel ? escapeHtml(createdAtLabel) : ''}
+              </div>
             </div>
           </div>
         </div>
@@ -145,19 +144,63 @@ function renderQuestionCard(q) {
   `;
 }
 
-function formatDate(iso) {
-  if (!iso) return '';
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString('vi-VN', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+/** Pagination renderer */
+function renderPagination(container, { page, totalPages }) {
+  if (!totalPages || totalPages <= 1) {
+    container.innerHTML = '';
+    return;
+  }
+
+  let html = '';
+
+  // Prev
+  html += `<button class="pagination__btn" data-page="${
+    page - 1
+  }" ${page <= 1 ? 'disabled' : ''}>&laquo;</button>`;
+
+  // Simple window: current -1, current, current +1
+  const start = Math.max(1, page - 1);
+  const end = Math.min(totalPages, page + 1);
+
+  if (start > 1) {
+    html += `<button class="pagination__btn" data-page="1">1</button>`;
+    if (start > 2) {
+      html += `<span class="pagination__ellipsis">...</span>`;
+    }
+  }
+
+  for (let p = start; p <= end; p++) {
+    html += `<button class="pagination__btn ${
+      p === page ? 'is-active' : ''
+    }" data-page="${p}">${p}</button>`;
+  }
+
+  if (end < totalPages) {
+    if (end < totalPages - 1) {
+      html += `<span class="pagination__ellipsis">...</span>`;
+    }
+    html += `<button class="pagination__btn" data-page="${totalPages}">${totalPages}</button>`;
+  }
+
+  // Next
+  html += `<button class="pagination__btn" data-page="${
+    page + 1
+  }" ${page >= totalPages ? 'disabled' : ''}>&raquo;</button>`;
+
+  container.innerHTML = html;
+
+  container.querySelectorAll('.pagination__btn[data-page]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetPage = Number(btn.dataset.page);
+      if (!targetPage || targetPage === state.page) return;
+      state.page = targetPage;
+      loadQuestions();
+    });
   });
 }
 
-function escapeHtml(str = '') {
-  return str
+function escapeHtml(str) {
+  return (str || '')
     .toString()
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')

@@ -1,0 +1,50 @@
+/* assets/css/pages/auth.css */
+
+.auth-hero-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+
+.auth-hero-subtitle {
+  font-size: 0.98rem;
+  color: rgba(148, 163, 184, 0.96);
+  line-height: 1.6;
+}
+
+/* Right panel */
+.auth-panel-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.auth-panel-desc {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  margin-bottom: 22px;
+}
+
+.auth-form {
+  margin-top: 8px;
+}
+
+.auth-checkbox-label {
+  font-size: 0.85rem;
+}
+
+/* Mobile tweaks */
+@media (max-width: 576px) {
+  .auth-hero-title {
+    font-size: 1.9rem;
+  }
+
+  .auth-panel-inner {
+    box-shadow: none;
+  }
+
+  .auth-social-buttons {
+    flex-direction: column;
+  }
+}

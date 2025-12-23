@@ -25,6 +25,8 @@ namespace Application.Common.Interfaces
         DbSet<CommentRevision> CommentRevisions { get; }
         DbSet<PostAttachment> PostAttachments { get; }
         DbSet<CommentAttachment> CommentAttachments { get; }
+        DbSet<Report> Reports { get; }
+        DbSet<Document> Documents { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

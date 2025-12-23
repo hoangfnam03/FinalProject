@@ -28,7 +28,7 @@ namespace Application.Auth.Commands.Login
             var dto = request.Request;
 
             var (ok, userId, error) = await _identity.CheckPasswordAsync(dto.Email, dto.Password);
-            if (!ok) throw new System.InvalidOperationException(error ?? "Invalid credentials.");
+            if (!ok) throw new InvalidOperationException(error ?? "Invalid credentials.");
 
             // Phát JWT
             var (access, exp) = _jwt.Generate(userId, dto.Email);

@@ -2,7 +2,24 @@
 import { http } from '../core/http.js';
 
 export const questionApi = {
-  /** GET /api/v1/posts -> PostDtoPaged (Questions list) */
+  /**
+   * Dùng chung cho list câu hỏi với phân trang
+   * GET /api/v1/posts?page=1&pageSize=10&sort=newest
+   */
+  getList({ page = 1, pageSize = 10, sort = 'newest', search, tag } = {}) {
+    const params = {
+      page,
+      pageSize,
+      sort,
+    };
+
+    if (search) params.search = search;
+    if (tag) params.tag = tag;
+
+    return http.get('/api/v1/posts', { params });
+  },
+
+  /** Hàm cũ, vẫn giữ nếu chỗ khác còn dùng */
   getAll(query) {
     return http.get('/api/v1/posts', { params: query });
   },
@@ -27,10 +44,15 @@ export const questionApi = {
     return http.post(`/api/v1/posts/${id}/vote`, { value });
   },
 
-  /** GET /api/v1/tags/{tag}/posts -> PostDtoPaged (Questions by tag) */
-  getByTag(tag, query) {
+  /**
+   * GET /api/v1/tags/{tag}/posts?page=1&pageSize=10&sort=newest
+   * Câu hỏi theo tag có phân trang
+   */
+  getByTag(tag, { page = 1, pageSize = 10, sort = 'newest' } = {}) {
+    const params = { page, pageSize, sort };
+
     return http.get(`/api/v1/tags/${encodeURIComponent(tag)}/posts`, {
-      params: query,
+      params,
     });
   },
 };

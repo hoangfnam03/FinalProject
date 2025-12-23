@@ -1,5 +1,7 @@
 ﻿using Application.Common.Interfaces;
+using Application.Common.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -76,6 +78,37 @@ namespace Infrastructure.Identity
         {
             var user = await _userManager.FindByEmailAsync(email);
             return user?.Id;
+        }
+        public async Task LockUserAsync(long userId, CancellationToken ct)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId, ct);
+            if (user == null) return;
+
+            // đảm bảo lockout bật
+            if (!user.LockoutEnabled)
+                user.LockoutEnabled = true;
+
+            // khoá vĩnh viễn
+            user.LockoutEnd = DateTimeOffset.MaxValue;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                throw new InvalidOperationException(string.Join("; ", result.Errors.Select(e => e.Description)));
+        }
+
+        public async Task<IdentityUserBrief> GetUserBriefAsync(long userId, CancellationToken ct)
+        {
+            var u = await _userManager.Users.AsNoTracking()
+                .Where(x => x.Id == userId)
+                .Select(x => new IdentityUserBrief
+                {
+                    Id = x.Id,
+                    Email = x.Email,
+                    PhoneNumber = x.PhoneNumber
+                })
+                .FirstOrDefaultAsync(ct);
+
+            return u ?? new IdentityUserBrief { Id = userId };
         }
     }
 }

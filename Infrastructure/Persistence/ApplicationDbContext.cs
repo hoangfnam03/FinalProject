@@ -36,6 +36,8 @@ namespace Infrastructure.Persistence
         public DbSet<CommentRevision> CommentRevisions => Set<CommentRevision>();
         public DbSet<PostAttachment> PostAttachments => Set<PostAttachment>();
         public DbSet<CommentAttachment> CommentAttachments => Set<CommentAttachment>();
+        public DbSet<Report> Reports => Set<Report>();
+        public DbSet<Document> Documents => Set<Document>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

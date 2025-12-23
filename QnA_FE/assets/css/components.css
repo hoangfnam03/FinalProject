@@ -1,50 +1,61 @@
-/* assets/css/components.css */
-
 /* BUTTONS */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
-  border-radius: var(--radius-md);
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border-radius: 999px; /* pill button toàn hệ thống */
   border: 1px solid transparent;
-  padding: var(--space-2) var(--space-4);
   font-size: var(--text-sm);
   font-weight: 500;
   cursor: pointer;
   background-color: transparent;
-  color: inherit;
+  color: var(--color-text-main);
   transition:
     background-color 0.15s ease,
     color 0.15s ease,
+    border-color 0.15s ease,
     box-shadow 0.15s ease,
-    border-color 0.15s ease;
+    transform 0.05s ease;
 }
 
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Nút chính */
 .btn-primary {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-btn-primary-text);
   box-shadow: var(--shadow-sm);
 }
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   background-color: var(--color-primary-hover);
   border-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
+/* Nút “ghost” dùng cho social / header */
 .btn-ghost {
-  background-color: transparent;
-  border-color: transparent;
-  color: inherit;
+  background-color: var(--color-bg-subtle, #f8fafc);
+  border-color: var(--color-border-subtle);
+  color: var(--color-text-main);
 }
-.btn-ghost:hover {
-  background-color: var(--color-btn-ghost-hover-bg);
+.btn-ghost:hover:not(:disabled) {
+  background-color: var(--color-btn-ghost-hover-bg, #e2e8f0);
 }
 
 /* Icon button trong header */
 .btn-icon {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
@@ -58,13 +69,19 @@
   background-color: var(--color-btn-icon-hover-bg);
 }
 
-/* CARD chung (sau này bạn dùng cho câu hỏi, profile,...) */
+/* CARD chung (dùng cho login, question, profile,...) */
 .card {
   background-color: var(--color-bg-surface);
-  border-radius: var(--radius-lg);
+  border-radius: 24px;
   border: 1px solid var(--color-border-subtle);
-  box-shadow: var(--shadow-sm);
-  padding: var(--space-4);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+  padding: 24px 24px 20px;
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 32px 32px 24px;
+  }
 }
 
 /* FORM GROUP */
@@ -84,11 +101,11 @@
   padding: var(--space-2) var(--space-3);
   font-size: var(--text-sm);
   outline: none;
-  background-color: var(--color-form-input-bg);
+  background-color: var(--color-form-input-bg, #f8fafc);
 }
 .form-input:focus {
   border-color: var(--color-primary);
-  box-shadow: var(--shadow-input-focus);
+  box-shadow: var(--shadow-input-focus, 0 0 0 1px rgba(37, 99, 235, 0.35));
 }
 
 /* TEXT HELP */
@@ -132,6 +149,7 @@
 }
 
 .btn-sm {
-  padding: 2px 8px;
+  min-height: 32px;
+  padding: 0 12px;
   font-size: var(--text-xs);
 }

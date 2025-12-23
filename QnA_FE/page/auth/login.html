@@ -2,51 +2,96 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <title>Sign in - Q&A</title>
+    <title>Đăng nhập - Q&A</title>
     <link rel="stylesheet" href="../../assets/css/app.css" />
-    <link rel="stylesheet" href="../../assets/css/pages/auth.css" />
+    <!-- (có hoặc không thêm dòng dưới cũng được vì app.css đã import auth.css rồi) -->
+    <!-- <link rel="stylesheet" href="../../assets/css/pages/auth.css" /> -->
   </head>
   <body>
     <div data-partial="header"></div>
 
     <main class="page page--auth">
-      <div class="container">
-        <div class="card auth-card">
-          <h1 class="auth-card__title">Sign in</h1>
-          <p class="auth-card__subtitle text-muted">
-            Đăng nhập để đặt câu hỏi và trả lời.
-          </p>
-
-          <form data-form="login">
-            <div class="form-group">
-              <label class="form-label" for="email">Email</label>
-              <input
-                class="form-input"
-                type="email"
-                id="email"
-                name="email"
-                required
-              />
+      <div class="auth-layout">
+        <!-- LEFT: Hero -->
+        <section class="auth-layout__left">
+          <div class="auth-hero">
+            <div class="auth-hero__logo-badge">
+              <span class="auth-hero__logo-icon">&lt;/&gt;</span>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="password">Password</label>
-              <input
-                class="form-input"
-                type="password"
-                id="password"
-                name="password"
-                required
-              />
+            <h1 class="auth-hero__title">Chào mừng đến với DevAsk</h1>
+            <p class="auth-hero__subtitle">
+              Cộng đồng chia sẻ kiến thức, gỡ lỗi và phát triển sự nghiệp dành cho lập trình viên.
+            </p>
+          </div>
+        </section>
+
+        <!-- RIGHT: Form -->
+        <section class="auth-layout__right">
+          <div class="card auth-card">
+            <header class="auth-card__header">
+              <h2 class="auth-card__title">Đăng nhập</h2>
+              <p class="auth-card__subtitle text-muted">
+                Nhập thông tin tài khoản của bạn để tiếp tục.
+              </p>
+            </header>
+
+            <form data-form="login" class="auth-card__form">
+              <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input
+                  class="form-input"
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="user@example.com"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <div class="auth-card__form-label-row">
+                  <label class="form-label" for="password">Mật khẩu</label>
+                  <a href="#" class="auth-card__forgot-link">Quên mật khẩu?</a>
+                </div>
+                <input
+                  class="form-input"
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+
+              <p class="form-error" data-role="form-error"></p>
+
+              <button type="submit" class="btn btn-primary w-full">
+                Đăng nhập
+              </button>
+            </form>
+
+            <div class="auth-card__divider">
+              <span>Hoặc tiếp tục với</span>
             </div>
 
-            <p class="form-error" data-role="form-error"></p>
+            <div class="auth-card__social">
+              <button type="button" class="btn btn-ghost auth-card__social-btn">
+                <span class="auth-card__social-icon">G</span>
+                <span>Google</span>
+              </button>
+              <button type="button" class="btn btn-ghost auth-card__social-btn">
+                <span class="auth-card__social-icon">GH</span>
+                <span>GitHub</span>
+              </button>
+            </div>
 
-            <button type="submit" class="btn btn-primary w-full">
-              Sign in
-            </button>
-          </form>
-        </div>
+            <p class="auth-card__switch text-muted">
+              Chưa có tài khoản?
+              <a href="#">Đăng ký ngay</a>
+            </p>
+          </div>
+        </section>
       </div>
     </main>
 

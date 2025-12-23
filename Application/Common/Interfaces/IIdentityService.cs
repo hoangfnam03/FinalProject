@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Application.Common.Models;
+using System.Threading.Tasks;
 
 namespace Application.Common.Interfaces
 {
@@ -10,5 +11,7 @@ namespace Application.Common.Interfaces
         Task<(bool Success, long UserId, string? Error)> CheckPasswordAsync(string email, string password);
         Task<bool> IsEmailConfirmedAsync(long userId);
         Task<long?> GetUserIdByEmailAsync(string email);
+        Task LockUserAsync(long userId, CancellationToken ct);
+        Task<IdentityUserBrief> GetUserBriefAsync(long userId, CancellationToken ct);
     }
 }

@@ -2,35 +2,115 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <title>Questions - Q&A</title>
+    <title>Câu hỏi hàng đầu - Q&A</title>
     <link rel="stylesheet" href="../../assets/css/app.css" />
-    <link rel="stylesheet" href="../../assets/css/pages/questions.css" />
   </head>
   <body>
     <div data-partial="header"></div>
 
     <main class="page page--questions">
       <div class="container">
-        <header class="questions-page-header">
-          <div>
-            <h1 data-role="questions-heading">Questions</h1>
-            <p class="text-muted" data-role="filter-info"></p>
-          </div>
+        <div class="questions-layout">
+          <!-- SIDEBAR -->
+          <aside class="questions-layout__sidebar">
+            <div class="sidebar-card">
+              <div class="sidebar-logo">
+                <div class="sidebar-logo__icon">&lt;/&gt;</div>
+                <div class="sidebar-logo__title">DevAsk</div>
+              </div>
 
-          <div class="questions-filters">
-            <button class="btn btn-ghost btn-filter is-active">Newest</button>
-            <button class="btn btn-ghost btn-filter">Votes</button>
-            <button class="btn btn-ghost btn-filter">Updated</button>
-            <button class="btn btn-ghost btn-filter">Unanswered</button>
-          </div>
-        </header>
+              <nav class="sidebar-nav">
+                <a href="./questions.html" class="sidebar-nav__item is-active">
+                  <span class="sidebar-nav__icon">🏠</span>
+                  <span>Trang chủ</span>
+                </a>
+                <a href="../category/categories.html" class="sidebar-nav__item">
+                  <span class="sidebar-nav__icon">📂</span>
+                  <span>Danh mục</span>
+                </a>
+                <a href="#" class="sidebar-nav__item">
+                  <span class="sidebar-nav__icon">🏷️</span>
+                  <span>Tags</span>
+                </a>
+                <a href="../user/profile.html" class="sidebar-nav__item">
+                  <span class="sidebar-nav__icon">👤</span>
+                  <span>Hồ sơ cá nhân</span>
+                </a>
+              </nav>
+            </div>
 
-        <section class="overview-stats-card card" data-role="overview-stats">
-          <!-- JS render OverviewStatsDto ở đây -->
-          <p class="text-muted">Đang tải thống kê...</p>
-        </section>
+            <div class="sidebar-card sidebar-card--categories">
+              <h3 class="sidebar-section__title">Danh mục phổ biến</h3>
+              <ul class="sidebar-category-list" data-role="popular-categories">
+                <!-- sẽ render bằng JS hoặc tạm để cứng -->
+                <li class="sidebar-category-item">
+                  <span class="sidebar-category__dot sidebar-category__dot--js"></span>
+                  <span class="sidebar-category__name">JavaScript</span>
+                  <span class="sidebar-category__count">12k</span>
+                </li>
+                <li class="sidebar-category-item">
+                  <span class="sidebar-category__dot sidebar-category__dot--react"></span>
+                  <span class="sidebar-category__name">ReactJS</span>
+                  <span class="sidebar-category__count">8.5k</span>
+                </li>
+                <li class="sidebar-category-item">
+                  <span class="sidebar-category__dot sidebar-category__dot--python"></span>
+                  <span class="sidebar-category__name">Python</span>
+                  <span class="sidebar-category__count">6k</span>
+                </li>
+              </ul>
+            </div>
+          </aside>
 
-        <section class="questions-list"></section>
+          <!-- MAIN CONTENT -->
+          <section class="questions-layout__main">
+            <header class="questions-header">
+              <h1 class="questions-header__title">Câu hỏi hàng đầu</h1>
+              <p class="questions-header__subtitle">
+                Các câu hỏi được quan tâm nhất hôm nay
+              </p>
+
+              <div class="questions-header__tabs" data-role="question-sort">
+                <button
+                  type="button"
+                  class="btn-tab is-active"
+                  data-sort="newest"
+                >
+                  Mới nhất
+                </button>
+                <button
+                  type="button"
+                  class="btn-tab"
+                  data-sort="popular"
+                >
+                  Phổ biến
+                </button>
+                <button
+                  type="button"
+                  class="btn-tab"
+                  data-sort="unanswered"
+                >
+                  Chưa trả lời
+                </button>
+              </div>
+            </header>
+
+            <div
+              class="questions-list"
+              data-role="question-list"
+            >
+              <!-- JS render -->
+            </div>
+
+            <!-- Pagination -->
+            <div
+              class="pagination"
+              data-role="pagination"
+            >
+              <!-- JS render -->
+            </div>
+          </section>
+        </div>
       </div>
     </main>
 

@@ -1,0 +1,6 @@
+/* assets/css/utilities.css */
+
+/* Có thể thêm các class tiện ích tuỳ ý sau này */
+.text-soft {
+  color: var(--text-soft);
+}

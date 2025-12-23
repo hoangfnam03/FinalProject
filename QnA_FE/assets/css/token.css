@@ -99,3 +99,13 @@
   --color-notification-dropdown-bg: #ffffff;
   --color-notification-dropdown-border: rgba(148, 163, 184, 0.4);
 }
+
+body.theme-devask {
+  --color-primary: #2563eb;
+  --color-auth-hero-bg: #020617;
+}
+
+body.theme-companyA {
+  --color-primary: #16a34a;
+  --color-auth-hero-bg: #022c22;
+}

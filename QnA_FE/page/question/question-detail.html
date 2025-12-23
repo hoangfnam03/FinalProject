@@ -2,85 +2,225 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <title>Question detail - Q&A</title>
+    <title>Chi tiết câu hỏi - DevAsk</title>
     <link rel="stylesheet" href="../../assets/css/app.css" />
-    <link rel="stylesheet" href="../../assets/css/pages/question-detail.css" />
   </head>
   <body>
     <div data-partial="header"></div>
 
     <main class="page page--question-detail">
       <div class="container">
-        <!-- CÂU HỎI -->
-        <article class="question-detail card" data-role="question-detail">
-          <p>Đang tải câu hỏi...</p>
-        </article>
-
-        <section class="question-history card">
-          <div class="question-history__header">
-            <div>
-              <h2 class="question-history__title" data-role="history-title">
-                Lịch sử câu hỏi
-              </h2>
-              <p
-                class="question-history__subtitle text-muted"
-                data-role="history-subtitle"
-              >
-                Các lần chỉnh sửa nội dung câu hỏi.
-              </p>
-            </div>
-            <button
-              class="link-button"
-              type="button"
-              data-action="history-back-to-question"
-              hidden
-            >
-              Quay lại lịch sử câu hỏi
-            </button>
-          </div>
-
-          <div class="question-history__layout">
-            <div class="question-history__list" data-role="history-list">
-              <!-- JS render RevisionDto / CommentRevisionDto -->
-            </div>
-            <div class="question-history__detail" data-role="history-detail">
-              <!-- JS render RevisionDetailDto / CommentRevisionDetailDto -->
-            </div>
-          </div>
-        </section>
-
-        <!-- DANH SÁCH COMMENT -->
-        <section class="question-comments">
-          <h2 class="question-comments__title">Comments</h2>
-          <div class="question-comments__list" data-role="comment-list">
-            <!-- JS render CommentDto -->
-          </div>
-
-          <!-- FORM THÊM COMMENT -->
-          <div class="question-comments__form card">
-            <h3 class="question-comments__form-title">
-              Thêm bình luận
-            </h3>
-            <form data-form="add-comment">
-              <div class="form-group">
-                <label class="form-label" for="comment-body">
-                  Nội dung
-                </label>
-                <textarea
-                  id="comment-body"
-                  name="body"
-                  class="form-input question-comments__textarea"
-                  rows="3"
-                  required
-                ></textarea>
+        <div class="questions-layout">
+          <!-- SIDEBAR (reuse giống trang danh sách câu hỏi) -->
+          <aside class="questions-layout__sidebar">
+            <div class="sidebar-card">
+              <div class="sidebar-logo">
+                <div class="sidebar-logo__icon">&lt;/&gt;</div>
+                <div class="sidebar-logo__title">DevAsk</div>
               </div>
-              <p class="form-error" data-role="comment-error"></p>
-              <button class="btn btn-primary" type="submit">
-                Đăng bình luận
+
+              <nav class="sidebar-nav">
+                <a href="./questions.html" class="sidebar-nav__item is-active">
+                  <span class="sidebar-nav__icon">🏠</span>
+                  <span>Trang chủ</span>
+                </a>
+                <a
+                  href="../category/categories.html"
+                  class="sidebar-nav__item"
+                >
+                  <span class="sidebar-nav__icon">📂</span>
+                  <span>Danh mục</span>
+                </a>
+                <a href="#" class="sidebar-nav__item">
+                  <span class="sidebar-nav__icon">🏷️</span>
+                  <span>Tags</span>
+                </a>
+                <a href="../user/profile.html" class="sidebar-nav__item">
+                  <span class="sidebar-nav__icon">👤</span>
+                  <span>Hồ sơ cá nhân</span>
+                </a>
+              </nav>
+            </div>
+
+            <div class="sidebar-card sidebar-card--categories">
+              <h3 class="sidebar-section__title">Danh mục phổ biến</h3>
+              <ul class="sidebar-category-list" data-role="popular-categories">
+                <li class="sidebar-category-item">
+                  <span
+                    class="sidebar-category__dot sidebar-category__dot--js"
+                  ></span>
+                  <span class="sidebar-category__name">JavaScript</span>
+                  <span class="sidebar-category__count">12k</span>
+                </li>
+                <li class="sidebar-category-item">
+                  <span
+                    class="sidebar-category__dot sidebar-category__dot--react"
+                  ></span>
+                  <span class="sidebar-category__name">ReactJS</span>
+                  <span class="sidebar-category__count">8.5k</span>
+                </li>
+                <li class="sidebar-category-item">
+                  <span
+                    class="sidebar-category__dot sidebar-category__dot--python"
+                  ></span>
+                  <span class="sidebar-category__name">Python</span>
+                  <span class="sidebar-category__count">6k</span>
+                </li>
+              </ul>
+            </div>
+          </aside>
+
+          <!-- MAIN CONTENT -->
+          <section class="questions-layout__main question-detail">
+            <!-- Back link -->
+            <div class="question-detail__topbar">
+              <button
+                type="button"
+                class="question-detail__back"
+                data-action="back"
+              >
+                ← Quay lại
               </button>
-            </form>
-          </div>
-        </section>
+            </div>
+
+            <!-- Title + vote + body -->
+            <div class="question-detail__header">
+              <h1
+                class="question-detail__title"
+                data-role="question-title"
+              >
+                Đang tải...
+              </h1>
+            </div>
+
+            <div class="question-detail__layout">
+              <!-- Vote panel -->
+              <div class="question-vote-panel">
+                <button
+                  class="vote-btn"
+                  type="button"
+                  data-action="vote-up"
+                >
+                  ▲
+                </button>
+                <div
+                  class="vote-count"
+                  data-role="question-votes"
+                >
+                  0
+                </div>
+                <button
+                  class="vote-btn"
+                  type="button"
+                  data-action="vote-down"
+                >
+                  ▼
+                </button>
+
+                <button
+                  class="vote-icon-btn"
+                  type="button"
+                  data-action="bookmark"
+                  title="Lưu câu hỏi"
+                >
+                  📑
+                </button>
+                <button
+                  class="vote-icon-btn"
+                  type="button"
+                  data-action="share"
+                  title="Chia sẻ"
+                >
+                  🔗
+                </button>
+              </div>
+
+              <!-- Question body -->
+              <article class="card question-detail__card">
+                <div
+                  class="question-detail__body"
+                  data-role="question-body"
+                >
+                  <!-- nội dung câu hỏi -->
+                </div>
+
+                <div
+                  class="question-detail__tags"
+                  data-role="question-tags"
+                >
+                  <!-- tags -->
+                </div>
+
+                <div class="question-detail__meta">
+                  <div
+                    class="question-detail__meta-left"
+                    data-role="question-meta-left"
+                  ></div>
+                  <div
+                    class="question-detail__meta-right"
+                    data-role="question-meta-right"
+                  ></div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Answers section -->
+            <section class="question-answers">
+              <header class="question-answers__header">
+                <h2 class="question-answers__title">
+                  <span data-role="answer-count">0</span> Câu trả lời
+                </h2>
+                <div class="question-answers__tabs">
+                  <button
+                    type="button"
+                    class="btn-tab is-active"
+                    data-sort-answer="score"
+                  >
+                    Điểm số
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-tab"
+                    data-sort-answer="newest"
+                  >
+                    Ngày tháng
+                  </button>
+                </div>
+              </header>
+
+              <div
+                class="question-answers__list"
+                data-role="answers-list"
+              >
+                <!-- answers render bằng JS -->
+              </div>
+            </section>
+
+            <!-- Answer form -->
+            <section class="answer-form card">
+              <h3 class="answer-form__title">Câu trả lời của bạn</h3>
+              <div class="answer-form__toolbar">
+                <button type="button" class="btn-sm">B</button>
+                <button type="button" class="btn-sm">I</button>
+                <button type="button" class="btn-sm">&lt;&gt;</button>
+                <button type="button" class="btn-sm">🖼️</button>
+              </div>
+              <form data-role="answer-form">
+                <textarea
+                  class="answer-form__textarea"
+                  name="content"
+                  rows="5"
+                  placeholder="Chia sẻ kiến thức của bạn..."
+                ></textarea>
+                <div class="answer-form__actions">
+                  <button type="submit" class="btn btn-primary">
+                    Đăng câu trả lời
+                  </button>
+                </div>
+              </form>
+            </section>
+          </section>
+        </div>
       </div>
     </main>
 

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Câu hỏi - DevAsk</title>
+
+    <!-- Bootstrap + fonts (dùng chung với login) -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/assets/css/app.css" />
+  </head>
+  <body class="app-body">
+    <!-- Header sẽ được load từ /partials/header.html -->
+    <div id="global-header" data-partial="header"></div>
+
+    <main class="app-shell">
+      <!-- Sidebar -->
+      <aside class="app-sidebar">
+        <nav class="sidebar-nav">
+          <a
+            href="/page/question/questions.html"
+            class="sidebar-nav-item"
+            data-nav-key="home"
+          >
+            <span class="sidebar-nav-icon">
+              <i class="fa-solid fa-house"></i>
+            </span>
+            <span>Trang chủ</span>
+          </a>
+
+          <a
+            href="/page/category/categories.html"
+            class="sidebar-nav-item"
+            data-nav-key="categories"
+          >
+            <span class="sidebar-nav-icon">
+              <i class="fa-solid fa-layer-group"></i>
+            </span>
+            <span>Danh mục</span>
+          </a>
+
+          <a
+            href="/page/search/search.html"
+            class="sidebar-nav-item"
+            data-nav-key="tags"
+          >
+            <span class="sidebar-nav-icon">
+              <i class="fa-solid fa-tags"></i>
+            </span>
+            <span>Tags</span>
+          </a>
+
+          <a
+            href="/page/user/profile.html"
+            class="sidebar-nav-item"
+            data-nav-key="profile"
+          >
+            <span class="sidebar-nav-icon">
+              <i class="fa-solid fa-user"></i>
+            </span>
+            <span>Hồ sơ cá nhân</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">DANH MỤC PHỔ BIẾN</div>
+          <ul class="sidebar-tag-list">
+            <li class="sidebar-tag-item">
+              <span class="sidebar-tag-dot sidebar-tag-dot--yellow"></span>
+              <span class="sidebar-tag-name">JavaScript</span>
+              <span class="sidebar-tag-count">12k</span>
+            </li>
+            <li class="sidebar-tag-item">
+              <span class="sidebar-tag-dot sidebar-tag-dot--blue"></span>
+              <span class="sidebar-tag-name">ReactJS</span>
+              <span class="sidebar-tag-count">8.5k</span>
+            </li>
+            <li class="sidebar-tag-item">
+              <span class="sidebar-tag-dot sidebar-tag-dot--green"></span>
+              <span class="sidebar-tag-name">Python</span>
+              <span class="sidebar-tag-count">6k</span>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <section class="app-main">
+        <div class="questions-page">
+          <header class="questions-header">
+            <h1 class="questions-title">Câu hỏi hàng đầu</h1>
+            <p class="questions-subtitle">
+              Các câu hỏi được quan tâm nhất hôm nay
+            </p>
+
+            <div class="questions-tabs" data-role="question-tabs">
+              <button
+                class="questions-tab-btn is-active"
+                data-role="question-tab"
+                data-sort="latest"
+              >
+                Mới nhất
+              </button>
+              <button
+                class="questions-tab-btn"
+                data-role="question-tab"
+                data-sort="popular"
+              >
+                Phổ biến
+              </button>
+              <button
+                class="questions-tab-btn"
+                data-role="question-tab"
+                data-sort="unanswered"
+              >
+                Chưa trả lời
+              </button>
+            </div>
+          </header>
+
+          <section
+            class="questions-list"
+            data-role="question-list"
+          ></section>
+
+          <!-- Phân trang -->
+          <nav
+            class="questions-pagination"
+            data-role="pagination"
+            aria-label="Pagination"
+          ></nav>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer (nếu cần) -->
+    <div id="global-footer" data-partial="footer"></div>
+
+    <script type="module" src="/assets/js/entry/questions.entry.js"></script>
+  </body>
+</html>
