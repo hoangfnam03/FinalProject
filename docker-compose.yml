@@ -28,8 +28,14 @@ services:
       - ASPNETCORE_URLS=http://+:7006
       # Key phải trùng ConnectionStrings:DefaultConnection trong appsettings
       - ConnectionStrings__DefaultConnection=Server=db,1433;Database=QnA;User Id=sa;Password=Sa123456!;TrustServerCertificate=True;
+      - Qdrant__Enabled=true
+      - Qdrant__Endpoint=http://qdrant:6333
+      - Qdrant__CollectionName=qna_questions
+      - Qdrant__Distance=Cosine
+      - Qdrant__VectorSize=1536
     depends_on:
       - db
+      - qdrant
     networks:
       - qna_network
 
@@ -67,8 +73,20 @@ services:
       echo '=== MIGRATION DONE ==='
       "
 
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qna_qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - qna_network
+
 volumes:
   sql_data:
+  qdrant_data:
 
 networks:
   qna_network:
