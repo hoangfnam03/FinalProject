@@ -64,6 +64,7 @@ Bạn sẽ thấy 4 container:
 | `qna_backend`     | .NET API                             |
 | `qna_frontend`    | FE (Nginx)                           |
 | `qna-db-migrator` | Tự chạy Migration + Seed (auto exit) |
+| `qna_qdrant`      | Vector store Qdrant                  |
 
 ---
 
@@ -86,6 +87,37 @@ Trang login nằm ở:
 ```
 http://localhost:3000/page/auth/login.html
 ```
+
+---
+
+## 🧭 4.1. Kết nối Qdrant + OpenAI Embedding
+
+> Mục này dành cho việc index câu hỏi vào Qdrant để tìm kiếm semantic.
+
+1. **Chạy Qdrant**: docker compose đã khai báo service `qna_qdrant` (port 6333/6334). Chỉ cần `docker compose up -d` là Qdrant chạy cùng hệ thống.
+2. **Cấu hình appsettings**: bật Qdrant + key embedding (OpenAI) trong `QnA_BE/appsettings.json` hoặc thông qua biến môi trường:
+
+   ```json
+   "Qdrant": {
+     "Enabled": true,
+     "Endpoint": "http://qdrant:6333",
+     "CollectionName": "qna_questions",
+     "Distance": "Cosine",
+     "VectorSize": 1536
+   },
+   "Embeddings": {
+     "Model": "text-embedding-3-small",
+     "ApiKey": "OPENAI_API_KEY_CUA_BAN"
+   }
+   ```
+
+   Khi chạy Docker bạn có thể truyền biến môi trường `Qdrant__Enabled=true`, `Qdrant__Endpoint=http://qdrant:6333`, `Embeddings__ApiKey=...` để tránh sửa file.
+3. **Cách hoạt động**: khi tạo bài viết mới, backend sẽ:
+   * Tách nội dung câu hỏi thành các chunk (mặc định 200 từ, chồng lấn 40 từ).
+   * Gọi OpenAI tạo embedding cho từng chunk.
+   * Upsert vector vào collection `qna_questions` của Qdrant (payload gồm `questionId`, `title`, `chunk`, `chunkIndex`).
+
+Bạn có thể chỉnh tham số chunking qua section `VectorChunking` (MaxWords/OverlapWords).
 
 ---
 
