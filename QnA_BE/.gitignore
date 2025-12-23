@@ -1,0 +1,13 @@
+# Visual Studio
+.vs/
+
+# .NET build outputs
+**/bin/
+**/obj/
+
+# user-specific
+*.user
+*.suo
+*.cache
+*.db-shm
+*.db-wal
