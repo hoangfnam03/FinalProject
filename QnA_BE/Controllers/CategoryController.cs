@@ -3,6 +3,7 @@ using Application.Categories.Commands.UpdateCategory;
 using Application.Categories.DTOs;
 using Application.Categories.Queries.GetCategory;
 using Application.Categories.Queries.GetCategoryBySlug;
+using Application.Categories.Queries.GetPopularCategories;
 using Application.Categories.Queries.GetPostsByCategory;
 using Application.Common.Models;
 using Application.Posts.DTOs;
@@ -61,6 +62,17 @@ namespace QnA_BE.Controllers
         {
             var dto = await _mediator.Send(new UpdateCategoryCommand(id, request), ct);
             return Ok(dto);
+        }
+
+        // GET /api/v1/categories/popular?top=3&includeHidden=false
+        [HttpGet("categories/popular")]
+        public async Task<ActionResult<List<PopularCategoryDto>>> GetPopular(
+            [FromQuery] int top = 3,
+            [FromQuery] bool includeHidden = false,
+            CancellationToken ct = default)
+        {
+            var data = await _mediator.Send(new GetPopularCategoriesQuery(top, includeHidden), ct);
+            return Ok(data);
         }
     }
 }

@@ -25,6 +25,7 @@ namespace QnA_BE.Controllers
 
         // GET /api/v1/posts/{postId}/comments?page=
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<Paged<CommentDto>>> List(long postId, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, CancellationToken ct = default)
         {

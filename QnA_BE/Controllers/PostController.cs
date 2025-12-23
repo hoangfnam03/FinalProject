@@ -76,14 +76,6 @@ namespace QnA_BE.Controllers
             return Ok(new { score, myVote });
         }
 
-        // GET /api/v1/tags/{tag}/posts?page=
-        [HttpGet("tags/{tag}/posts")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Paged<PostDto>>> ListByTag([FromRoute] string tag, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, CancellationToken ct = default)
-        {
-            var res = await _mediator.Send(new ListPostsByTagQuery(tag, page, pageSize), ct);
-            return Ok(res);
-        }
 
         // GET /api/v1/posts/{id}/revisions?page=&pageSize=
         [HttpGet("posts/{id:long}/revisions")]
