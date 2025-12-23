@@ -6,6 +6,7 @@ using Infrastructure.Persistence;
 using Infrastructure.Persistence.Interceptors;
 using Infrastructure.Persistence.Seed;
 using Infrastructure.Services;
+using Infrastructure.Services.Vectorization;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -105,6 +106,10 @@ namespace Infrastructure
             services.AddScoped<ITenantProvider, TenantProvider>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IFileStorage, LocalFileStorage>();
+            services.Configure<QdrantSettings>(configuration.GetSection("Qdrant"));
+            services.Configure<EmbeddingSettings>(configuration.GetSection("Embeddings"));
+            services.Configure<VectorChunkingSettings>(configuration.GetSection("VectorChunking"));
+            services.AddHttpClient<IQuestionVectorService, QuestionVectorService>();
 
             return services;
         }

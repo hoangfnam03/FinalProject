@@ -13,10 +13,15 @@ namespace Application.Posts.Handlers
         private readonly IApplicationDbContext _db;
         private readonly ICurrentUserService _current;
         private readonly ITenantProvider _tenant;
+        private readonly IQuestionVectorService _vectorService;
 
-        public CreatePostCommandHandler(IApplicationDbContext db, ICurrentUserService current, ITenantProvider tenant)
+        public CreatePostCommandHandler(
+            IApplicationDbContext db,
+            ICurrentUserService current,
+            ITenantProvider tenant,
+            IQuestionVectorService vectorService)
         {
-            _db = db; _current = current; _tenant = tenant;
+            _db = db; _current = current; _tenant = tenant; _vectorService = vectorService;
         }
 
         public async Task<PostDetailDto> Handle(CreatePostCommand request, CancellationToken ct)
@@ -87,6 +92,8 @@ namespace Application.Posts.Handlers
             var catName = category?.Name;
             var catSlug = category?.Slug;
             var catId = category?.Id;
+
+            await _vectorService.IndexQuestionAsync(post.Id, post.Title, post.Body, ct);
 
             return new PostDetailDto
             {

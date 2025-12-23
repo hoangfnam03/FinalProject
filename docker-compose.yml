@@ -1,12 +1,13 @@
 version: '3.8'
+
 services:
-  # ========== 1. SQL Server ==========
+  # 1. Database SQL Server
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: qna_db
     environment:
-      ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: "Sa123456!"
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Sa123456!
     ports:
       - "1436:1433"          # ĐỔI: host 1436 -> container 1433, tránh trùng SQL máy
     volumes:
@@ -27,11 +28,16 @@ services:
       - ASPNETCORE_URLS=http://+:7006
       # Key phải trùng ConnectionStrings:DefaultConnection trong appsettings
       - ConnectionStrings__DefaultConnection=Server=db,1433;Database=QnA;User Id=sa;Password=Sa123456!;TrustServerCertificate=True;
+      - Qdrant__Enabled=true
+      - Qdrant__Endpoint=http://qdrant:6333
+      - Qdrant__CollectionName=qna_questions
+      - Qdrant__Distance=Cosine
+      - Qdrant__VectorSize=1536
     depends_on:
-      - db-migrator
+      - db
+      - qdrant
     networks:
       - qna_network
-    restart: unless-stopped
 
   # 3. Frontend (Nginx)
   frontend:
@@ -39,8 +45,6 @@ services:
       context: ./QnA_FE
       dockerfile: Dockerfile
     container_name: qna_frontend
-    depends_on:
-      - backend
     ports:
       - "3000:80"
     networks:
@@ -60,28 +64,29 @@ services:
       - ConnectionStrings__DefaultConnection=Server=db,1433;Database=QnA;User Id=sa;Password=Sa123456!;TrustServerCertificate=True;
     command: >
       /bin/bash -c "
-      echo '--- Waiting for DB to be ready ---' &&
-      for i in {1..60}; do
-        if timeout 2 bash -c 'cat < /dev/null > /dev/tcp/db/1433' 2>/dev/null; then
-          echo '--- DB port is open, testing connection ---' &&
-          sleep 5 &&
-          break
-        fi
-        echo 'DB is not ready yet, waiting... (attempt $$i/60)' &&
-        sleep 2
-      done &&
-      echo '--- Installing dotnet-ef ---' &&
+      echo '--- Đợi DB sẵn sàng ---' &&
+      sleep 20 &&
+      echo '--- Cài đặt dotnet-ef ---' &&
       dotnet tool install --global dotnet-ef --version 8.0.10 || true &&
-      export PATH=\"$$PATH:/root/.dotnet/tools\" &&
-      echo '--- Creating database using EF (if not exists) ---' &&
-      dotnet-ef database update --project Infrastructure/Infrastructure.csproj --startup-project QnA_BE/QnA_BE.csproj --connection 'Server=db,1433;Database=master;User Id=sa;Password=Sa123456!;TrustServerCertificate=True;' --context ApplicationDbContext --no-build 2>/dev/null || true &&
-      echo '--- Running migration ---' &&
-      dotnet-ef database update --project Infrastructure/Infrastructure.csproj --startup-project QnA_BE/QnA_BE.csproj --verbose &&
+      echo '--- Chạy migration ---' &&
+      /root/.dotnet/tools/dotnet-ef database update --project Infrastructure/Infrastructure.csproj --startup-project QnA_BE/QnA_BE.csproj --verbose &&
       echo '=== MIGRATION DONE ==='
       "
 
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qna_qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - qna_network
+
 volumes:
   sql_data:
+  qdrant_data:
 
 networks:
   qna_network:
