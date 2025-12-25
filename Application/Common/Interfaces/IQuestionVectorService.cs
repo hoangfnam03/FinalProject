@@ -6,6 +6,6 @@ namespace Application.Common.Interfaces
     {
         IReadOnlyList<QuestionChunk> ChunkQuestion(string text);
         Task<IReadOnlyList<float>> EmbedAsync(string text, CancellationToken cancellationToken);
-        Task IndexQuestionAsync(Guid questionId, string title, string body, CancellationToken cancellationToken);
+        Task IndexQuestionAsync(long questionId, string title, string body, CancellationToken cancellationToken);
     }
 }

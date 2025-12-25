@@ -13,12 +13,15 @@ namespace Infrastructure.Persistence.Configurations
             entity.Property(p => p.Title).IsRequired().HasMaxLength(200);
             entity.Property(p => p.Body).IsRequired();
 
-            entity.HasIndex(p => new { p.AuthorId, p.CreatedAt }).HasDatabaseName("IX_Post_AuthorId_CreatedAt");
+            entity.HasIndex(p => new { p.AuthorId, p.CreatedAt })
+                  .HasDatabaseName("IX_Post_AuthorId_CreatedAt");
 
             entity.HasOne(p => p.Author)
                   .WithMany()
                   .HasForeignKey(p => p.AuthorId)
+                  .HasPrincipalKey(m => m.UserId)   // ✅ không có <Member>
                   .OnDelete(DeleteBehavior.Restrict);
+
 
             entity.HasOne(p => p.Category)
                   .WithMany()
@@ -28,5 +31,6 @@ namespace Infrastructure.Persistence.Configurations
             entity.HasIndex(p => new { p.CategoryId, p.CreatedAt })
                   .HasDatabaseName("IX_Post_CategoryId_CreatedAt");
         }
+
     }
 }

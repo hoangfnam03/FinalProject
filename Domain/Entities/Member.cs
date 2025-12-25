@@ -15,7 +15,7 @@ namespace Domain.Entities
         public bool IsModerator { get; set; }
         public bool IsAdministrator { get; set; }
 
-        public long UserId { get; set; } // FK tới Identity User (long key mapping – tuỳ bạn)
+        public Guid UserId { get; set; } // FK tới Identity User (long key mapping – tuỳ bạn)
         public Guid? TenantId { get; set; }
 
         public TrustLevel? TrustLevel { get; set; }

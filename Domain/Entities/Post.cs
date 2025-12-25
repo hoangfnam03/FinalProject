@@ -7,7 +7,7 @@ namespace Domain.Entities
     {
         public string Title { get; set; } = default!;
         public string Body { get; set; } = default!;
-        public long AuthorId { get; set; }            // Member.Id
+        public Guid AuthorId { get; set; }            // Member.Id
         public Guid? TenantId { get; set; }
 
         public Member? Author { get; set; }

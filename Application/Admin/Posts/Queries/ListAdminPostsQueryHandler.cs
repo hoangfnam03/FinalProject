@@ -18,13 +18,19 @@ namespace Application.Admin.Questions.Queries
 
         public async Task<Paged<AdminPostListItemDto>> Handle(ListAdminPostsQuery request, CancellationToken ct)
         {
+            // Validate / normalize paging
+            var page = Math.Max(1, request.Page);
+            var pageSize = Math.Clamp(request.PageSize, 1, 200);
+
             var keyword = request.Keyword?.Trim();
             var status = request.Status?.Trim();
 
-            // Post = câu hỏi
+            // Build query:
+            // - join posts -> members by Member.UserId (Post.AuthorId is Guid)
+            // - join posts -> categories (inner join, same as original)
             var query =
                 from p in _db.Posts.AsNoTracking()
-                join m in _db.Members.AsNoTracking() on p.AuthorId equals m.Id
+                join m in _db.Members.AsNoTracking() on p.AuthorId equals m.UserId
                 join c in _db.Categories.AsNoTracking() on p.CategoryId equals c.Id
                 select new
                 {
@@ -32,13 +38,13 @@ namespace Application.Admin.Questions.Queries
                     AuthorName = m.DisplayName,
                     CategoryName = c.Name,
                     CategoryId = c.Id,
-                    CommentCount = _db.Comments.Count(x => x.PostId == p.Id),
+                    CommentCount = _db.Comments.Count(x => x.PostId == p.Id)
                 };
 
-            // Exclude soft-deleted posts
+            // Exclude soft-deleted posts (SoftDeletableEntity => IsDeleted)
             query = query.Where(x => !x.Post.IsDeleted);
 
-            if (!string.IsNullOrWhiteSpace(keyword))
+            if (!string.IsNullOrWhiteSpace(keyword))    
             {
                 query = query.Where(x => x.Post.Title.Contains(keyword!));
             }
@@ -60,8 +66,8 @@ namespace Application.Admin.Questions.Queries
 
             var items = await query
                 .OrderByDescending(x => x.Post.CreatedAt)
-                .Skip((request.Page - 1) * request.PageSize)
-                .Take(request.PageSize)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(x => new AdminPostListItemDto
                 {
                     Id = x.Post.Id,
@@ -77,8 +83,8 @@ namespace Application.Admin.Questions.Queries
 
             return new Paged<AdminPostListItemDto>
             {
-                Page = request.Page,
-                PageSize = request.PageSize,
+                Page = page,
+                PageSize = pageSize,
                 Total = total,
                 Items = items
             };

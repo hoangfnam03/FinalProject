@@ -26,11 +26,15 @@ namespace Infrastructure.Persistence.Configurations
             // 1-1 với User qua UserId (Identity)
             entity.HasIndex(e => e.UserId).IsUnique();
 
-            // >>> Thêm FK thật tới AspNetUsers(Id)
-            entity.HasOne<ApplicationUser>()      // không cần navigation trên Member
+            // quan trọng: cho phép dùng UserId làm principal key
+            entity.HasAlternateKey(e => e.UserId);
+
+            // FK thật tới AspNetUsers(Id)
+            entity.HasOne<ApplicationUser>()
                   .WithMany()
                   .HasForeignKey(e => e.UserId)
-                  .OnDelete(DeleteBehavior.Restrict); // chặn xoá User khi còn Member
+                  .OnDelete(DeleteBehavior.Restrict);
         }
+
     }
 }
